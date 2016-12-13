@@ -1,5 +1,5 @@
 //
-//  Character.swift
+//  Sun.swift
 //  Bird Crap
 //
 //  Created by Rick Crane on 13/12/2016.
@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class Character: SKSpriteNode {
+class Sun : SKSpriteNode {
     init(scene : SKScene, texture : String) {
         let texture = SKTexture(imageNamed: texture)
         
@@ -17,10 +17,18 @@ class Character: SKSpriteNode {
         
         self.xScale = 0.3
         self.yScale = self.xScale
-        self.anchorPoint = CGPoint(x: 0.5, y: 0)
-        self.position = CGPoint(x: scene.frame.midX - 40, y: scene.frame.minY + 20)
-        self.zPosition = 8
-                
+        self.zPosition = 4
+        
+        self.position = CGPoint(x: scene.frame.minX + 20, y: scene.frame.maxY - 40)
+        
+        sunAnimation()
+        
+    }
+    
+    func sunAnimation(){
+        let sunMoveAction = SKAction.rotate(byAngle: 0.4, duration: 1)
+        let sunActionForever = SKAction.repeatForever(sunMoveAction)
+        self.run(sunActionForever)
     }
     
     required init?(coder aDecoder: NSCoder) {

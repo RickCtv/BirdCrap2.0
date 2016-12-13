@@ -12,7 +12,9 @@ import AVFoundation
 
 class GameScene: SKScene {
     
-    var player = AVAudioPlayer()
+    var bgAudioPlayer = AVAudioPlayer()
+    let soundMaker = SoundManager()
+    let randNumGen = RandomNumberGenerator()
     var musicSoundIsOn = true
     var otherSoundIsOn = true
     var notsAreSwitchedOn = true
@@ -25,7 +27,6 @@ class GameScene: SKScene {
     let shopFence = SKSpriteNode(imageNamed: "ShopFence")
     let statsFence = SKSpriteNode(imageNamed: "StatsFence")
     let creditsFence = SKSpriteNode(imageNamed: "CreditsFence")
-    let character = SKSpriteNode(imageNamed: "grandad")
     let billboard = SKSpriteNode(imageNamed: "BillBoard")
     let closeButton = SKSpriteNode(imageNamed: "closeButton")
     let notificationsSwitch = SKSpriteNode(imageNamed: "notsOn")
@@ -43,22 +44,21 @@ class GameScene: SKScene {
         //Create Clouds
         _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
         
+        //Make Character
+        let character = Character(scene: self, texture: "grandad")
+        self.addChild(character)
+        
+        //Make Sun
+        let sun = Sun(scene: self, texture: "Sun")
+        self.addChild(sun)
+        
     }
     
     func createCloud(){
         let cloud = Cloud(scene: self)
         self.addChild(cloud)
     }
-    
-    func randomBetweenNumbers(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat{
-        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
-    }
-    
-    func randomBetweenNumbersDouble(firstNum: Double, secondNum: Double) -> Double{
-        return Double(arc4random()) / Double(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
-    }
-    
-    
+
     func createStartButton(){
         let startButtonPosY : CGFloat = 2
         startButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY + startButtonPosY)
@@ -140,37 +140,11 @@ class GameScene: SKScene {
     }
     
     func fenceMoveTo(node : SKSpriteNode, pos : CGPoint){
-        let action = SKAction.move(to: pos, duration: randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
+        let action = SKAction.move(to: pos, duration: randNumGen.randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
         node.run(action)
         
     }
     
-    func createSun(){
-        let sun = SKSpriteNode(imageNamed: "Sun")
-        sun.xScale = 0.3
-        sun.yScale = sun.xScale
-        sun.zPosition = 4
-        
-        sun.position = CGPoint(x: self.frame.minX + 20, y: self.frame.maxY - 40)
-        
-        self.addChild(sun)
-        
-        let sunMoveAction = SKAction.rotate(byAngle: 0.4, duration: 1)
-        let sunActionForever = SKAction.repeatForever(sunMoveAction)
-        sun.run(sunActionForever)
-        
-    }
-    
-    func makeCharacter(){
-        character.xScale = 0.3
-        character.yScale = character.xScale
-        character.anchorPoint = CGPoint(x: 0.5, y: 0)
-        character.position = CGPoint(x: self.frame.midX - 40, y: self.frame.minY + 20)
-        character.zPosition = 8
-        
-        self.addChild(character)
-        
-    }
     
     func makeHouse(){
         let house = SKSpriteNode(imageNamed: "house")
@@ -187,26 +161,25 @@ class GameScene: SKScene {
         //https://youtu.be/gV9ts8IFMPQ This is the music for this game - we have to give credit
         
         do{
-           player = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "bgMusic", ofType: "mp3")!))
-            player.prepareToPlay()
-            player.volume = 0.1
-            player.numberOfLoops = -1
-            player.play()
+           bgAudioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "bgMusic", ofType: "mp3")!))
+            bgAudioPlayer.prepareToPlay()
+            bgAudioPlayer.volume = 0.1
+            bgAudioPlayer.numberOfLoops = -1
+            bgAudioPlayer.play()
         }
         catch{
             print(error)
         }
         
     }
-    
+
     func menuButtonClicked(node : SKSpriteNode){
+        soundMaker.playASound(scene: self, fileNamed: "buttonClick")
         let moveSelectedNodeToLocation = CGPoint(x: self.frame.minX - node.frame.size.width, y: self.frame.midY)
         let moveToMidYAction = SKAction.moveTo(y: self.frame.midY, duration: 0.5)
         let selectedAction = SKAction.move(to: moveSelectedNodeToLocation, duration: 2)
         let sequence = SKAction.sequence([moveToMidYAction, selectedAction])
         node.run(sequence)
-        
-        playSound(fileNamed: "buttonClick")
         
         billboard.xScale = 1
         billboard.yScale = 1
@@ -341,17 +314,17 @@ class GameScene: SKScene {
             if node.name == "CloseButton" {
                 print("Close Button Was Touched")
                 removeBillBoard()
-                playSound(fileNamed: "buttonClick")
+                soundMaker.playASound(scene: self, fileNamed: "buttonClick")
                 closeButton.removeFromParent()
             }
             if node.name == "NotificationsButton" {
                 print("Notifications Button Was Touched")
                 if notsAreSwitchedOn == true {
-                    playSound(fileNamed: "buttonClick")
+                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
                     notificationsSwitch.texture = SKTexture(imageNamed: "notsOff")
                     notsAreSwitchedOn = false
                 }else{
-                    playSound(fileNamed: "buttonClick")
+                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
                     notificationsSwitch.texture = SKTexture(imageNamed: "notsOn")
                     notsAreSwitchedOn = true
                 }
@@ -359,11 +332,11 @@ class GameScene: SKScene {
             
             if node.name == "MusicOn" {
                 if musicSoundIsOn == true {
-                    player.stop()
+                    //player.stop()
                     musicOnButton.texture = SKTexture(imageNamed: "SoundOffButton")
                     musicSoundIsOn = false
                 }else{
-                    player.play()
+                    //player.play()
                     musicOnButton.texture = SKTexture(imageNamed: "soundOn")
                     musicSoundIsOn = true
                 }
@@ -408,23 +381,13 @@ class GameScene: SKScene {
         soundTitle.removeFromParent()
     }
     
-    func playSound(fileNamed: String){
-        if otherSoundIsOn == true{
-            let soundToplay = SKAction.playSoundFileNamed(fileNamed, waitForCompletion: false)
-            self.run(soundToplay)
-        }
-    }
-    
-    
     func createMainMenu(){
         createBGMusic()
-        createSun()
         createStartButton()
         createGround()
         makeHouse()
         createMenu()
         createTitle()
-        makeCharacter()
     }
     
     func removeAllActionsAndSprites(){
