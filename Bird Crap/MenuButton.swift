@@ -9,51 +9,56 @@
 import Foundation
 import SpriteKit
 
+private var ButtonsArray = [SKSpriteNode]()
+
 class MenuButton : SKSpriteNode{
     
-    private var ButtonsArray = [SKSpriteNode]()
+    let firstSpriteStartPos : CGFloat = 50
+    let spaceBelowOtherSprites : CGFloat = 70
     
     init(scene : SKScene, imageName : String, moveDownFromSprite : SKSpriteNode?) {
         //Randomly Choose a Cloud Image to display
         let texture = SKTexture(imageNamed: imageName)
         super.init(texture: texture , color: UIColor.clear, size: texture.size())
         
-        if moveDownFromSprite == nil {
-            self.position = CGPoint(x: scene.frame.maxX + self.frame.size.width, y: scene.frame.midY - self.frame.size.height + 30)
-        }else{
-            self.position = CGPoint(x: scene.frame.maxX + self.frame.size.width, y: (moveDownFromSprite?.frame.minY)! - 65)
-        }
-        
         self.xScale = 0.7
         self.yScale = self.xScale
         self.zPosition = 4
         self.name = imageName
+        
+        if moveDownFromSprite == nil {
+            self.position = CGPoint(
+                x: scene.frame.maxX + self.frame.size.width,
+                y: scene.frame.midY - self.frame.size.height + firstSpriteStartPos)
+        }else{
+            self.position = CGPoint(
+                x: scene.frame.maxX + self.frame.size.width,
+                y: (moveDownFromSprite?.frame.minY)! - spaceBelowOtherSprites)
+        }
+    
         OutOfBoundsSpritesArray.append(self)
         ButtonsArray.append(self)
-        
-        moveButtons(scene: scene, MoreMenuButtons: false)
+        moveButtons(scene: scene, moveDownFromSprite : moveDownFromSprite)
     }
     
-    func moveButtons(scene: SKScene, MoreMenuButtons : Bool){
-        let randomValue = randomBetweenNumbers(firstNum: 6, secondNum: 12)
+    func moveButtons(scene: SKScene, moveDownFromSprite : SKSpriteNode?){
+        let randomValue = randomBetweenNumbers(firstNum: 7, secondNum: 15)
         var pointToMoveTo = CGPoint()
-        let lastSprite = ButtonsArray.last
-        
+
         if ButtonsArray.count == 1{
             pointToMoveTo = CGPoint(
-                x: scene.frame.maxX - self.frame.size.width / randomValue,
-                y: scene.frame.midY - self.frame.size.height + 30)
+                x: scene.frame.maxX - self.position.x / randomValue,
+                y: scene.frame.midY - self.frame.size.height + firstSpriteStartPos)
             
         }else{
             pointToMoveTo = CGPoint(
-                x: scene.frame.maxX - self.frame.size.width / randomValue,
-                y: (lastSprite?.frame.midY)! - self.frame.size.height - 65)
+                x: scene.frame.maxX - self.position.x / randomValue,
+                y: (self.position.y) - scene.frame.midY )
         }
         
         let action = SKAction.move(to: pointToMoveTo, duration: randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
         self.run(action)
     }
-    
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
