@@ -22,14 +22,11 @@ class Cloud: SKSpriteNode {
         
         super.init(texture: texture , color: UIColor.clear, size: texture.size())
         
-        //Grab Random Num Generator Class For Positioning
-        let randomNumberGenerator = RandomNumberGenerator()
-        
         //Position The Sprite
         let xPos = scene.frame.maxX + self.frame.size.width
         let maxYPos = scene.frame.maxY - self.frame.size.height
         let minYPos = scene.frame.midY + (self.frame.size.height)
-        let finalYPos = randomNumberGenerator.withFloat(firstNum: minYPos, secondNum: maxYPos)
+        let finalYPos = RandomPointsBetweenWithFloat(firstNum: minYPos, secondNum: maxYPos)
         
         self.position = CGPoint(x: xPos, y: finalYPos)
         self.zPosition = 5

@@ -14,15 +14,10 @@ class GameScene: SKScene {
     
     var bgAudioPlayer = AVAudioPlayer()
     let soundMaker = SoundManager()
-    let randNumGen = RandomNumberGenerator()
-    var musicSoundIsOn = true
-    var otherSoundIsOn = true
-    var notsAreSwitchedOn = true
-    var arrayOfMovingOutOfBoundsSprites = [SKSpriteNode]()
+    let animator = AnimationEditor()
     
     //Needed Sprited:
     let ground = SKSpriteNode(imageNamed: "ground")
-    let startButton = SKSpriteNode(imageNamed: "goButton")
     let settingsFence = SKSpriteNode(imageNamed: "SettingsFence")
     let shopFence = SKSpriteNode(imageNamed: "ShopFence")
     let statsFence = SKSpriteNode(imageNamed: "StatsFence")
@@ -54,25 +49,25 @@ class GameScene: SKScene {
         
     }
     
+    func createStartButton(){
+        //Make Start Button
+        let startButton = SpriteCreator(scene: self, texture: "goButton", Xposition: self
+            .frame.midX, yPosition: self.frame.midY, zPosition: 7)
+        self.addChild(startButton)
+        animator.fadeIn(node: startButton, withDuration: 2.5)
+    }
+    
     func createCloud(){
         let cloud = Cloud(scene: self)
         self.addChild(cloud)
     }
 
-    func createStartButton(){
-        let startButtonPosY : CGFloat = 2
-        startButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY + startButtonPosY)
-        startButton.zPosition = 10
-        startButton.name = "startButton"
-        arrayOfMovingOutOfBoundsSprites.append(startButton)
-        
-        startButton.alpha = 0
-        let fadeIn = SKAction.fadeAlpha(to: 1, duration: 2.5)
-        self.addChild(startButton)
-        startButton.run(fadeIn)
-        
-    }
     
+    
+    
+    
+    
+   
     func createGround(){
         ground.size = CGSize(width: self.frame.size.width, height: self.frame.size.height / 8)
         ground.anchorPoint = CGPoint(x: 0.5, y: 0)
@@ -94,44 +89,18 @@ class GameScene: SKScene {
     
     func createMenu(){
         
-        settingsFence.xScale = 0.7
-        settingsFence.yScale = settingsFence.xScale
-        settingsFence.position = CGPoint(x: self.frame.maxX + settingsFence.frame.size.width, y: self.frame.midY - settingsFence.frame.size.height + 30)
-        settingsFence.zPosition = 4
-        settingsFence.name = "Settings"
-        arrayOfMovingOutOfBoundsSprites.append(settingsFence)
+        let settingsFenceEndPos = CGPoint(
+            x: self.frame.maxX - settingsFence.frame.size.width / 6,
+            y: self.frame.midY - settingsFence.frame.size.height + 30)
         
-        shopFence.xScale = settingsFence.xScale
-        shopFence.yScale = settingsFence.yScale
-        shopFence.position = CGPoint(x: self.frame.maxX + shopFence.frame.size.width, y: settingsFence.frame.minY - 65)
-        shopFence.zPosition = 4
-        shopFence.name = "Shop"
-        arrayOfMovingOutOfBoundsSprites.append(shopFence)
+        let shopFenceEndPos = CGPoint(
+            x: self.frame.maxX - shopFence.frame.size.width / 10,
+            y: settingsFence.frame.minY - 65)
         
-        statsFence.xScale = settingsFence.xScale
-        statsFence.yScale = settingsFence.yScale
-        statsFence.position = CGPoint(x: self.frame.maxX + statsFence.frame.size.width, y: shopFence.frame.minY - 65)
-        statsFence.zPosition = 4
-        statsFence.name = "Stats"
-        arrayOfMovingOutOfBoundsSprites.append(statsFence)
-        
-        creditsFence.xScale = settingsFence.xScale
-        creditsFence.yScale = settingsFence.yScale
-        creditsFence.position = CGPoint(x: self.frame.maxX + creditsFence.frame.size.width, y: statsFence.frame.minY - 65)
-        creditsFence.zPosition = 4
-        creditsFence.name = "Credits"
-        arrayOfMovingOutOfBoundsSprites.append(creditsFence)
-        
-        let settingsFenceEndPos = CGPoint(x: self.frame.maxX - settingsFence.frame.size.width / 6, y: self.frame.midY - settingsFence.frame.size.height + 30)
-        let shopFenceEndPos = CGPoint(x: self.frame.maxX - shopFence.frame.size.width / 10, y: settingsFence.frame.minY - 65)
         let statsFenceEndPos = CGPoint(x: self.frame.maxX - statsFence.frame.size.width / 12, y: shopFence.frame.minY - 65)
+        
         let creditsFenceEndPos = CGPoint(x: self.frame.maxX - creditsFence.frame.size.width / 6, y: statsFence.frame.minY - 65)
         
-        self.addChild(settingsFence)
-        self.addChild(shopFence)
-        self.addChild(statsFence)
-        self.addChild(creditsFence)
-
         
         fenceMoveTo(node: settingsFence, pos: settingsFenceEndPos)
         fenceMoveTo(node: shopFence, pos: shopFenceEndPos)
@@ -140,7 +109,7 @@ class GameScene: SKScene {
     }
     
     func fenceMoveTo(node : SKSpriteNode, pos : CGPoint){
-        let action = SKAction.move(to: pos, duration: randNumGen.randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
+        let action = SKAction.move(to: pos, duration: randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
         node.run(action)
         
     }
@@ -187,13 +156,13 @@ class GameScene: SKScene {
         billboard.position.y = self.frame.midY
         billboard.zPosition = 6
         billboard.name = "billboard"
-        arrayOfMovingOutOfBoundsSprites.append(billboard)
+        OutOfBoundsSpritesArray.append(billboard)
         
         self.addChild(billboard)
         
         closeButton.zPosition = 7
         closeButton.name = "CloseButton"
-        arrayOfMovingOutOfBoundsSprites.append(shopFence)
+        OutOfBoundsSpritesArray.append(shopFence)
         closeButton.xScale = 0.2
         closeButton.yScale = closeButton.xScale
         closeButton.position = CGPoint(x: 250, y: 125)
@@ -213,7 +182,7 @@ class GameScene: SKScene {
     }
     
     func makeCredits(){
-        credits.text = "Rick Crane - CEO / Developer / Creator"
+        credits.text = CreditsPage().creditArray[0]
         credits.fontSize = 25
         credits.zPosition = 7
         credits.fontColor = UIColor.black
@@ -240,7 +209,7 @@ class GameScene: SKScene {
         billboard.addChild(musicTitle)
         
         musicOnButton.name = "MusicOn"
-        arrayOfMovingOutOfBoundsSprites.append(musicOnButton)
+        OutOfBoundsSpritesArray.append(musicOnButton)
         musicOnButton.zPosition = 7
         musicOnButton.xScale = 0.1
         musicOnButton.position.x = musicTitle.position.x + 100
@@ -257,7 +226,7 @@ class GameScene: SKScene {
         billboard.addChild(soundTitle)
         
         soundOnButton.name = "SoundOn"
-        arrayOfMovingOutOfBoundsSprites.append(soundOnButton)
+        OutOfBoundsSpritesArray.append(soundOnButton)
         soundOnButton.zPosition = 7
         soundOnButton.xScale = 0.1
         soundOnButton.position.x = soundTitle.position.x + 100
@@ -274,7 +243,7 @@ class GameScene: SKScene {
         billboard.addChild(notificationTitle)
         
         notificationsSwitch.name = "NotificationsButton"
-        arrayOfMovingOutOfBoundsSprites.append(notificationsSwitch)
+        OutOfBoundsSpritesArray.append(notificationsSwitch)
         notificationsSwitch.zPosition = 7
         notificationsSwitch.size = CGSize(width: 150, height: 75)
         notificationsSwitch.position.x = notificationTitle.position.x + 180
@@ -319,14 +288,14 @@ class GameScene: SKScene {
             }
             if node.name == "NotificationsButton" {
                 print("Notifications Button Was Touched")
-                if notsAreSwitchedOn == true {
+                if notificationsSwitchedOn == true {
                     soundMaker.playASound(scene: self, fileNamed: "buttonClick")
                     notificationsSwitch.texture = SKTexture(imageNamed: "notsOff")
-                    notsAreSwitchedOn = false
+                    notificationsSwitchedOn = false
                 }else{
                     soundMaker.playASound(scene: self, fileNamed: "buttonClick")
                     notificationsSwitch.texture = SKTexture(imageNamed: "notsOn")
-                    notsAreSwitchedOn = true
+                    notificationsSwitchedOn = true
                 }
             }
             
@@ -383,15 +352,14 @@ class GameScene: SKScene {
     
     func createMainMenu(){
         createBGMusic()
-        createStartButton()
         createGround()
         makeHouse()
-        createMenu()
+        //createMenu()
         createTitle()
     }
     
     func removeAllActionsAndSprites(){
-        for sprite in arrayOfMovingOutOfBoundsSprites {
+        for sprite in OutOfBoundsSpritesArray {
             if (!intersects(sprite)) {
                 sprite.removeAllActions()
                 sprite.removeFromParent()
