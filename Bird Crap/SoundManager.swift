@@ -16,8 +16,7 @@ class SoundManager{
     
     func playASound(scene : SKScene, fileNamed: String){
         
-        let soundTest = GameScene()
-        if soundTest.soundIsOn == true{
+        if otherSoundIsOn == true{
             let soundToplay = SKAction.playSoundFileNamed(fileNamed, waitForCompletion: false)
             scene.run(soundToplay)
         }else{

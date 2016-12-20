@@ -18,8 +18,7 @@ class GameScene: SKScene {
     let touchManager = TouchManager()
     var displayingMenuBoard = false
     var billboard : MenuBillBoard!
-    var soundIsOn = true
-    var musicIsOn = true
+    var startButton : SpriteCreator!
     
     override func didMove(to view: SKView) {
         makeMainMenu()
@@ -35,7 +34,7 @@ class GameScene: SKScene {
         createTitle()
         
         //Create Clouds
-        //_ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
         
         //Make Character
         let character = Character(scene: self, texture: "grandad")
@@ -48,7 +47,7 @@ class GameScene: SKScene {
     
     func createStartButton(){
         //Make Start Button
-        let startButton = SpriteCreator(scene: self, texture: "goButton", zPosition: 7, anchorPoints : nil)
+        startButton = SpriteCreator(scene: self, texture: "goButton", zPosition: 7, anchorPoints : nil)
         startButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         self.addChild(startButton)
         animator.fadeIn(node: startButton, withDuration: 2.5)
@@ -141,10 +140,12 @@ class GameScene: SKScene {
                     soundMaker.playASound(scene: self, fileNamed: "buttonClick")
                     touchManager.menuButtonClicked(buttonSelected: node, scene: self)
                     createOrRemoveBillBoard(node: button.name)
+                    animator.fadeOut(node: startButton, withDuration: 0.4)
                 }
             }
             if node.name == "closeButton" {
                 createOrRemoveBillBoard(node: nil)
+                animator.fadeIn(node: startButton, withDuration: 2.5)
             }else if node.name == "musicOn" {
                 soundSwitch(node: node, soundOrMusic: "music")
                 
@@ -162,22 +163,22 @@ class GameScene: SKScene {
         let onImage = SKTexture(imageNamed: "soundOn")
         
         if soundOrMusic == "sound"{
-            if soundIsOn != true{
+            if otherSoundIsOn != true{
                 node.run(SKAction.setTexture(onImage))
-                soundIsOn = true
+                otherSoundIsOn = true
             }else{
                 node.run(SKAction.setTexture(offImage))
-                soundIsOn = false
+                otherSoundIsOn = false
             }
         
         }else if soundOrMusic == "music"{
-            if musicIsOn == true{
+            if musicSoundIsOn == true{
                node.run(SKAction.setTexture(offImage))
-                musicIsOn = false
+                musicSoundIsOn = false
                 bgAudioPlayer.stop()
             }else{
                 node.run(SKAction.setTexture(onImage))
-                musicIsOn = true
+                musicSoundIsOn = true
                 bgAudioPlayer.play()
             }
         }
@@ -193,6 +194,6 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
+        print(musicSoundIsOn)
     }
 }

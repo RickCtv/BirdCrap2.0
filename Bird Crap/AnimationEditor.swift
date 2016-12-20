@@ -20,5 +20,10 @@ class AnimationEditor {
         let fadeIn = SKAction.fadeAlpha(to: 1, duration: withDuration)
         node.run(fadeIn)
     }
+    
+    func fadeOut(node : SKSpriteNode, withDuration : Double){
+        let fadeOut = SKAction.fadeAlpha(to: 0, duration: withDuration)
+        node.run(fadeOut)
+    }
 
 }
