@@ -9,13 +9,11 @@
 import Foundation
 import SpriteKit
 
-private var ButtonsArray = [SKSpriteNode]()
-
 class MenuButton : SKSpriteNode{
     
     let firstSpriteStartPos : CGFloat = 50
     let spaceBelowOtherSprites : CGFloat = 70
-    
+        
     init(scene : SKScene, imageName : String, moveDownFromSprite : SKSpriteNode?) {
         //Randomly Choose a Cloud Image to display
         let texture = SKTexture(imageNamed: imageName)
@@ -23,8 +21,12 @@ class MenuButton : SKSpriteNode{
         
         self.xScale = 0.7
         self.yScale = self.xScale
-        self.zPosition = 4
+        self.zPosition = 11
         self.name = imageName
+        self.physicsBody = SKPhysicsBody(rectangleOf: self.frame.size)
+        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.allowsRotation = false
+        self.physicsBody?.isDynamic = false
         
         if moveDownFromSprite == nil {
             self.position = CGPoint(
@@ -37,7 +39,7 @@ class MenuButton : SKSpriteNode{
         }
     
         OutOfBoundsSpritesArray.append(self)
-        ButtonsArray.append(self)
+        menuButtonsArray.append(self)
         moveButtons(scene: scene, moveDownFromSprite : moveDownFromSprite)
     }
     
@@ -45,7 +47,7 @@ class MenuButton : SKSpriteNode{
         let randomValue = randomBetweenNumbers(firstNum: 7, secondNum: 15)
         var pointToMoveTo = CGPoint()
 
-        if ButtonsArray.count == 1{
+        if menuButtonsArray.count == 1{
             pointToMoveTo = CGPoint(
                 x: scene.frame.maxX - self.position.x / randomValue,
                 y: scene.frame.midY - self.frame.size.height + firstSpriteStartPos)
@@ -58,6 +60,7 @@ class MenuButton : SKSpriteNode{
         
         let action = SKAction.move(to: pointToMoveTo, duration: randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
         self.run(action)
+        
     }
     
     required init(coder aDecoder: NSCoder) {

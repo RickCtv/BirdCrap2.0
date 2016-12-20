@@ -15,17 +15,17 @@ class GameScene: SKScene {
     var bgAudioPlayer = AVAudioPlayer()
     let soundMaker = SoundManager()
     let animator = AnimationEditor()
-    
-    //Needed Sprited:
-    let notificationsSwitch = SKSpriteNode(imageNamed: "notsOn")
-    var musicOnButton = SKSpriteNode(imageNamed: "soundOn")
-    var soundOnButton = SKSpriteNode(imageNamed: "soundOn")
-    let musicTitle = SKLabelNode(fontNamed: "IndieFlower")
-    let credits = SKLabelNode(fontNamed: "IndieFlower")
-    let notificationTitle = SKLabelNode(fontNamed: "IndieFlower")
-    let soundTitle = SKLabelNode(fontNamed: "IndieFlower")
+    let touchManager = TouchManager()
+    var displayingMenuBoard = false
+    var billboard : MenuBillBoard!
+    var soundIsOn = true
+    var musicIsOn = true
     
     override func didMove(to view: SKView) {
+        makeMainMenu()
+    }
+    
+    func makeMainMenu(){
         self.backgroundColor = UIColor(red: 51 / 255, green: 204 / 255, blue: 255 / 255, alpha: 1)
         createBGMusic()
         createStartButton()
@@ -35,7 +35,7 @@ class GameScene: SKScene {
         createTitle()
         
         //Create Clouds
-        _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
+        //_ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
         
         //Make Character
         let character = Character(scene: self, texture: "grandad")
@@ -44,7 +44,6 @@ class GameScene: SKScene {
         //Make Sun
         let sun = Sun(scene: self, texture: "Sun")
         self.addChild(sun)
-        
     }
     
     func createStartButton(){
@@ -61,6 +60,7 @@ class GameScene: SKScene {
     }
     
     func createMenuButtons(){
+        menuButtonsArray = []
         let settingsButton = MenuButton(scene: self, imageName: "SettingsFence", moveDownFromSprite: nil)
         self.addChild(settingsButton)
         
@@ -115,160 +115,70 @@ class GameScene: SKScene {
         
         self.addChild(house)
     }
-    
 
-    
-    
-    //////////////NEED TO FIX FROM HERE/////////////////
-
-    func makeCredits(){
-        credits.text = CreditsPage().creditArray[0]
-        credits.fontSize = 25
-        credits.zPosition = 7
-        credits.fontColor = UIColor.black
-        
-        //billboard.addChild(credits)
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    //SHOULD BE DONE IN THE MENUBILLBOARD CLASS TO HIDE AND DISPLAY THE VALUES... SHOULD BE DONE
-    func hideSprites(sprites : [SKSpriteNode]){
-        
-        for sprite in sprites {
-            let moveToLocation = CGPoint(x: self.frame.maxX + sprite.frame.size.width, y: sprite.position.y)
-            let moveAndHide = SKAction.move(to: moveToLocation, duration: 0.5)
-            sprite.run(moveAndHide)
+    func createOrRemoveBillBoard(node: String?){
+        if displayingMenuBoard == false {
+            billboard = MenuBillBoard(scene: self, imageName: "BillBoard", withnode: node)
+            self.addChild(billboard)
+            displayingMenuBoard = true
+        }else {
+            billboard.removeMenuBoard(scene: self)
+            createMenuButtons()
+            displayingMenuBoard = false
         }
     }
     
-    func settingsMenuSelected(){
-        musicTitle.text = "Music"
-        musicTitle.fontSize = 40
-        musicTitle.zPosition = 7
-        musicTitle.fontColor = UIColor.black
-        musicTitle.position.y = 40
-        musicTitle.position.x = -200
-        //billboard.addChild(musicTitle)
-        
-        musicOnButton.name = "MusicOn"
-        OutOfBoundsSpritesArray.append(musicOnButton)
-        musicOnButton.zPosition = 7
-        musicOnButton.xScale = 0.1
-        musicOnButton.position.x = musicTitle.position.x + 100
-        musicOnButton.position.y = musicTitle.position.y + 15
-        musicOnButton.yScale = musicOnButton.xScale
-        //billboard.addChild(musicOnButton)
-        
-        soundTitle.text = "Sound"
-        soundTitle.fontSize = 40
-        soundTitle.zPosition = 7
-        soundTitle.fontColor = UIColor.black
-        soundTitle.position.y = musicTitle.position.y - 70
-        soundTitle.position.x = -200
-        //billboard.addChild(soundTitle)
-        
-        soundOnButton.name = "SoundOn"
-        OutOfBoundsSpritesArray.append(soundOnButton)
-        soundOnButton.zPosition = 7
-        soundOnButton.xScale = 0.1
-        soundOnButton.position.x = soundTitle.position.x + 100
-        soundOnButton.position.y = soundTitle.position.y + 15
-        soundOnButton.yScale = soundOnButton.xScale
-        //billboard.addChild(soundOnButton)
-        
-        notificationTitle.text = "Notifications"
-        notificationTitle.fontSize = 40
-        notificationTitle.zPosition = 7
-        notificationTitle.fontColor = UIColor.black
-        notificationTitle.position.y = soundTitle.position.y - 70
-        notificationTitle.position.x = -145
-        //billboard.addChild(notificationTitle)
-        
-        notificationsSwitch.name = "NotificationsButton"
-        OutOfBoundsSpritesArray.append(notificationsSwitch)
-        notificationsSwitch.zPosition = 7
-        notificationsSwitch.size = CGSize(width: 150, height: 75)
-        notificationsSwitch.position.x = notificationTitle.position.x + 180
-        notificationsSwitch.position.y = notificationTitle.position.y + 15
-        //billboard.addChild(notificationsSwitch)
-        
-    }
-    
-    
+    //////////////NEED TO FIX FROM HERE THE BUTTON TOGGLES/////////////////
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
-        
             let location = touch.location(in: self)
             let node = atPoint(location)
+            
+            for button in menuButtonsArray{
+                //If a menu button was selcted
+                if node.name == button.name!{
+                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                    touchManager.menuButtonClicked(buttonSelected: node, scene: self)
+                    createOrRemoveBillBoard(node: button.name)
+                }
+            }
+            if node.name == "closeButton" {
+                createOrRemoveBillBoard(node: nil)
+            }else if node.name == "musicOn" {
+                soundSwitch(node: node, soundOrMusic: "music")
+                
+            }else if node.name == "SoundOn" {
+                soundSwitch(node: node, soundOrMusic: "sound")
+                
+            }else if node.name == "NotificationsButton" {
+                
+            }
+        }
+    }
+    
+    func soundSwitch(node : SKNode, soundOrMusic : String){
+        let offImage = SKTexture(imageNamed: "SoundOffButton")
+        let onImage = SKTexture(imageNamed: "soundOn")
         
-            if node.name == "Settings" {
-                print("Settings Button Was Touched")
-                
+        if soundOrMusic == "sound"{
+            if soundIsOn != true{
+                node.run(SKAction.setTexture(onImage))
+                soundIsOn = true
+            }else{
+                node.run(SKAction.setTexture(offImage))
+                soundIsOn = false
             }
-            if node.name == "Shop" {
-                print("Shop Button Was Touched")
-                
-            }
-            if node.name == "Stats" {
-                print("Stats Button Was Touched")
-                
-            }
-            if node.name == "Credits" {
-                print("Credits Button Was Touched")
-                
-            }
-            if node.name == "CloseButton" {
-                print("Close Button Was Touched")
-            }
-            if node.name == "NotificationsButton" {
-                print("Notifications Button Was Touched")
-                if notificationsSwitchedOn == true {
-                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
-                    notificationsSwitch.texture = SKTexture(imageNamed: "notsOff")
-                    notificationsSwitchedOn = false
-                }else{
-                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
-                    notificationsSwitch.texture = SKTexture(imageNamed: "notsOn")
-                    notificationsSwitchedOn = true
-                }
-            }
-            
-            if node.name == "MusicOn" {
-                if musicSoundIsOn == true {
-                    //player.stop()
-                    musicOnButton.texture = SKTexture(imageNamed: "SoundOffButton")
-                    musicSoundIsOn = false
-                }else{
-                    //player.play()
-                    musicOnButton.texture = SKTexture(imageNamed: "soundOn")
-                    musicSoundIsOn = true
-                }
-                print("Music Button Was Touched")
-            }
-            
-            if node.name == "SoundOn" {
-                if otherSoundIsOn == true {
-                    soundOnButton.texture = SKTexture(imageNamed: "SoundOffButton")
-                    otherSoundIsOn = false
-                }else{
-                    soundOnButton.texture = SKTexture(imageNamed: "soundOn")
-                    otherSoundIsOn = true
-                }
-                print("Sound Button Was Touched")
-            }
-
-            
-            if node.name == "startButton" {
-                print("Start Button Was Touched")
+        
+        }else if soundOrMusic == "music"{
+            if musicIsOn == true{
+               node.run(SKAction.setTexture(offImage))
+                musicIsOn = false
+                bgAudioPlayer.stop()
+            }else{
+                node.run(SKAction.setTexture(onImage))
+                musicIsOn = true
+                bgAudioPlayer.play()
             }
         }
     }
@@ -281,7 +191,7 @@ class GameScene: SKScene {
             }
         }
     }
-
+    
     override func update(_ currentTime: TimeInterval) {
         
     }

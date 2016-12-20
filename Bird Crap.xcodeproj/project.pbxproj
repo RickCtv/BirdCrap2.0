@@ -29,6 +29,7 @@
 		739B80231DFDB29600A022E7 /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 739B80221DFDB29600A022E7 /* bgMusic.mp3 */; };
 		739B80261DFDC1EF00A022E7 /* IndieFlower.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 739B80251DFDC1EF00A022E7 /* IndieFlower.ttf */; };
 		739B80281DFDE7FC00A022E7 /* buttonClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 739B80271DFDE7FC00A022E7 /* buttonClick.mp3 */; };
+		73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5DAC81E0861DC00979815 /* TouchManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		739B80221DFDB29600A022E7 /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgMusic.mp3; sourceTree = "<group>"; };
 		739B80251DFDC1EF00A022E7 /* IndieFlower.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndieFlower.ttf; sourceTree = "<group>"; };
 		739B80271DFDE7FC00A022E7 /* buttonClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buttonClick.mp3; sourceTree = "<group>"; };
+		73C5DAC81E0861DC00979815 /* TouchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				7347260B1E00892900B0E892 /* SoundManager.swift */,
 				7347260D1E00970C00B0E892 /* Sun.swift */,
 				734726111E00A8E200B0E892 /* MenuButton.swift */,
+				73C5DAC81E0861DC00979815 /* TouchManager.swift */,
 				734726131E00B76300B0E892 /* GameManager.swift */,
 				7361E2B41E01C6E100705A80 /* MenuBillboard.swift */,
 				734726151E00C7D400B0E892 /* CreditsPage.swift */,
@@ -289,7 +292,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Rick Crane";
 				TargetAttributes = {
 					739B7FE61DFD90D500A022E7 = {
@@ -374,6 +377,7 @@
 				734726031E00732200B0E892 /* Clouds.swift in Sources */,
 				739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */,
 				734726121E00A8E200B0E892 /* MenuButton.swift in Sources */,
+				73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */,
 				7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */,
 				739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */,
 				734726161E00C7D400B0E892 /* CreditsPage.swift in Sources */,
@@ -452,6 +456,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -502,6 +507,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
