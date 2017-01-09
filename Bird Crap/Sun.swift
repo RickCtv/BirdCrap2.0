@@ -26,7 +26,7 @@ class Sun : SKSpriteNode {
     }
     
     func sunAnimation(){
-        let sunMoveAction = SKAction.rotate(byAngle: 0.4, duration: 1)
+        let sunMoveAction = SKAction.rotate(byAngle: -0.4, duration: 1)
         let sunActionForever = SKAction.repeatForever(sunMoveAction)
         self.run(sunActionForever)
     }

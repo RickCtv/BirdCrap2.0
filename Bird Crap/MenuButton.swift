@@ -23,10 +23,6 @@ class MenuButton : SKSpriteNode{
         self.yScale = self.xScale
         self.zPosition = 11
         self.name = imageName
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.frame.size)
-        self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.allowsRotation = false
-        self.physicsBody?.isDynamic = false
         
         if moveDownFromSprite == nil {
             self.position = CGPoint(
@@ -62,6 +58,8 @@ class MenuButton : SKSpriteNode{
         self.run(action)
         
     }
+    
+    
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

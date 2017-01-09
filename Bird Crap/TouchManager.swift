@@ -17,6 +17,7 @@ class TouchManager {
                 let moveToLocation = CGPoint(x: scene.frame.maxX + button.frame.size.width, y: button.position.y)
                 let moveAndHide = SKAction.move(to: moveToLocation, duration: 0.5)
                 button.run(moveAndHide)
+                button.isUserInteractionEnabled = true
                 
             }else{
                 let FinalLocationY = CGPoint(x: button.position.x, y: scene.frame.midY)
@@ -26,6 +27,7 @@ class TouchManager {
                 
                 let runSequence = SKAction.sequence([moveUpAction, moveLeftAction])
                 button.run(runSequence)
+                button.isUserInteractionEnabled = true
             }
         }
     }

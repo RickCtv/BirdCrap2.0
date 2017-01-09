@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		734726031E00732200B0E892 /* Clouds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726021E00732200B0E892 /* Clouds.swift */; };
+		734726031E00732200B0E892 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726021E00732200B0E892 /* Cloud.swift */; };
 		7347260A1E0085B600B0E892 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726091E0085B600B0E892 /* Character.swift */; };
 		7347260C1E00892900B0E892 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7347260B1E00892900B0E892 /* SoundManager.swift */; };
 		7347260E1E00970C00B0E892 /* Sun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7347260D1E00970C00B0E892 /* Sun.swift */; };
@@ -50,7 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		734726021E00732200B0E892 /* Clouds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clouds.swift; sourceTree = "<group>"; };
+		734726021E00732200B0E892 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		734726091E0085B600B0E892 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		7347260B1E00892900B0E892 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		7347260D1E00970C00B0E892 /* Sun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sun.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		734726041E00739C00B0E892 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				734726021E00732200B0E892 /* Clouds.swift */,
+				734726021E00732200B0E892 /* Cloud.swift */,
 				734726091E0085B600B0E892 /* Character.swift */,
 				7347260B1E00892900B0E892 /* SoundManager.swift */,
 				7347260D1E00970C00B0E892 /* Sun.swift */,
@@ -374,7 +374,7 @@
 				7347260C1E00892900B0E892 /* SoundManager.swift in Sources */,
 				7347260E1E00970C00B0E892 /* Sun.swift in Sources */,
 				7347260A1E0085B600B0E892 /* Character.swift in Sources */,
-				734726031E00732200B0E892 /* Clouds.swift in Sources */,
+				734726031E00732200B0E892 /* Cloud.swift in Sources */,
 				739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */,
 				734726121E00A8E200B0E892 /* MenuButton.swift in Sources */,
 				73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */,

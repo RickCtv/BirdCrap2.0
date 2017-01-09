@@ -19,9 +19,12 @@ class GameScene: SKScene {
     var displayingMenuBoard = false
     var billboard : MenuBillBoard!
     var startButton : SpriteCreator!
+    var userTouched = true
+    
     
     override func didMove(to view: SKView) {
         makeMainMenu()
+        
     }
     
     func makeMainMenu(){
@@ -60,6 +63,8 @@ class GameScene: SKScene {
     
     func createMenuButtons(){
         menuButtonsArray = []
+        
+        // Maybe put here a timer before they appear again
         let settingsButton = MenuButton(scene: self, imageName: "SettingsFence", moveDownFromSprite: nil)
         self.addChild(settingsButton)
         
@@ -114,51 +119,23 @@ class GameScene: SKScene {
         
         self.addChild(house)
     }
-
-    func createOrRemoveBillBoard(node: String?){
-        if displayingMenuBoard == false {
-            billboard = MenuBillBoard(scene: self, imageName: "BillBoard", withnode: node)
-            self.addChild(billboard)
-            displayingMenuBoard = true
-        }else {
-            billboard.removeMenuBoard(scene: self)
-            createMenuButtons()
-            displayingMenuBoard = false
-        }
-    }
     
-    //////////////NEED TO FIX FROM HERE THE BUTTON TOGGLES/////////////////
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    func notificationSwitcher(node: SKNode){
+        soundMaker.playASound(scene: self, fileNamed: "buttonClick")
         
-        for touch in touches {
-            let location = touch.location(in: self)
-            let node = atPoint(location)
-            
-            for button in menuButtonsArray{
-                //If a menu button was selcted
-                if node.name == button.name!{
-                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
-                    touchManager.menuButtonClicked(buttonSelected: node, scene: self)
-                    createOrRemoveBillBoard(node: button.name)
-                    animator.fadeOut(node: startButton, withDuration: 0.4)
-                }
-            }
-            if node.name == "closeButton" {
-                createOrRemoveBillBoard(node: nil)
-                animator.fadeIn(node: startButton, withDuration: 2.5)
-            }else if node.name == "musicOn" {
-                soundSwitch(node: node, soundOrMusic: "music")
-                
-            }else if node.name == "SoundOn" {
-                soundSwitch(node: node, soundOrMusic: "sound")
-                
-            }else if node.name == "NotificationsButton" {
-                
-            }
+        if notificationsSwitchedOn == true {
+            notificationsSwitchedOn = false
+            let texture = SKTexture(imageNamed: "notsOff")
+            node.run(SKAction.setTexture(texture))
+        }else{
+            notificationsSwitchedOn = true
+            let texture = SKTexture(imageNamed: "notsOn")
+            node.run(SKAction.setTexture(texture))
         }
     }
     
     func soundSwitch(node : SKNode, soundOrMusic : String){
+        soundMaker.playASound(scene: self, fileNamed: "buttonClick")
         let offImage = SKTexture(imageNamed: "SoundOffButton")
         let onImage = SKTexture(imageNamed: "soundOn")
         
@@ -189,11 +166,75 @@ class GameScene: SKScene {
             if (!intersects(sprite)) {
                 sprite.removeAllActions()
                 sprite.removeFromParent()
+            } 
+        }
+    }
+    
+    func createOrRemoveBillBoard(node: String?){
+        if displayingMenuBoard == false {
+            billboard = MenuBillBoard(scene: self, imageName: "BillBoard", withnode: node)
+            self.addChild(billboard)
+            displayingMenuBoard = true
+            nodeWasPressedSoWaitForAction(numberOfSecs: 1)
+        }else {
+            billboard.removeMenuBoard(scene: self)
+            createMenuButtons()
+            displayingMenuBoard = false
+            nodeWasPressedSoWaitForAction(numberOfSecs: 2)
+        }
+    }
+    
+    func nodeWasPressedSoWaitForAction(numberOfSecs : Double){
+        self.isUserInteractionEnabled = false
+        let waitForDuration = SKAction.wait(forDuration: numberOfSecs)
+        self.run(waitForDuration, completion: {
+            self.userTouched = false
+            self.isUserInteractionEnabled = true
+        })
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
+        for touch in touches {
+            let location = touch.location(in: self)
+            let node = atPoint(location)
+            
+            //Make sure that the menu button is not multi-tapped
+            if userTouched == false {
+                userTouched = true
+                
+                //If a menu button was selcted
+                for button in menuButtonsArray{
+                    if node.name == button.name!{
+                        soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                        touchManager.menuButtonClicked(buttonSelected: node, scene: self)
+                        createOrRemoveBillBoard(node: button.name)
+                        animator.fadeOut(node: startButton, withDuration: 0.4)
+                    }
+                }
+            } 
+            
+            if node.name == "closeButton" {
+                createOrRemoveBillBoard(node: nil)
+                animator.fadeIn(node: startButton, withDuration: 2.5)
+                
+            }else if node.name == "musicButton" {
+                soundSwitch(node: node, soundOrMusic: "music")
+                
+            }else if node.name == "soundButton" {
+                soundSwitch(node: node, soundOrMusic: "sound")
+                
+            }else if node.name == "NotificationsButton" {
+                notificationSwitcher(node: node)
+            }else if node.name == "goButton" {
+                print("Touched START GAME BUTTON")
+            }else {
+                userTouched = false
             }
         }
     }
     
     override func update(_ currentTime: TimeInterval) {
-        print(musicSoundIsOn)
+        
     }
 }

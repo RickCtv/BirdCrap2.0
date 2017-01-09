@@ -11,11 +11,28 @@ import SpriteKit
 
 class MenuBillBoard : SKSpriteNode {
     
+    var soundButton : SKSpriteNode!
+    var musicButton : SKSpriteNode!
+    var notificationButton : SKSpriteNode!
+    let timerInterval : Double = 0.5
+    
     init(scene : SKScene, imageName : String, withnode: String?){
         let texture = SKTexture(imageNamed: imageName)
         let closeButton = SKSpriteNode(imageNamed: "closeButton")
         
         super.init(texture: texture , color: UIColor.clear, size: texture.size())
+        
+        if musicSoundIsOn {
+            self.musicButton = SKSpriteNode(imageNamed: "soundOn")
+        }else {
+            self.musicButton = SKSpriteNode(imageNamed: "SoundOffButton")
+        }
+        
+        if otherSoundIsOn {
+            self.soundButton = SKSpriteNode(imageNamed: "soundOn")
+        }else{
+            self.soundButton = SKSpriteNode(imageNamed: "SoundOffButton")
+        }
         
         self.xScale = 1
         self.yScale = 1
@@ -34,8 +51,6 @@ class MenuBillBoard : SKSpriteNode {
         self.addChild(closeButton)
         
         // Display specific info on screen here
-        let musicOnButton = SKSpriteNode(imageNamed: "soundOn")
-        let soundOnButton = SKSpriteNode(imageNamed: "soundOn")
         
         if withnode == "SettingsFence" {
             let musicTitle = SKLabelNode(text: "Music")
@@ -46,13 +61,13 @@ class MenuBillBoard : SKSpriteNode {
             musicTitle.position.x = -200
             self.addChild(musicTitle)
             
-            musicOnButton.name = "musicOn"
-            musicOnButton.zPosition = 7
-            musicOnButton.xScale = 0.1
-            musicOnButton.position.x = musicTitle.position.x + 100
-            musicOnButton.position.y = musicTitle.position.y + 15
-            musicOnButton.yScale = musicOnButton.xScale
-            self.addChild(musicOnButton)
+            musicButton.name = "musicButton"
+            musicButton.zPosition = 7
+            musicButton.xScale = 0.1
+            musicButton.position.x = musicTitle.position.x + 100
+            musicButton.position.y = musicTitle.position.y + 15
+            musicButton.yScale = musicButton.xScale
+            self.addChild(musicButton)
             
             let soundTitle = SKLabelNode(text: "Sound")
             soundTitle.fontSize = 40
@@ -62,13 +77,13 @@ class MenuBillBoard : SKSpriteNode {
             soundTitle.position.x = -200
             self.addChild(soundTitle)
             
-            soundOnButton.name = "SoundOn"
-            soundOnButton.zPosition = 7
-            soundOnButton.xScale = 0.1
-            soundOnButton.position.x = soundTitle.position.x + 100
-            soundOnButton.position.y = soundTitle.position.y + 15
-            soundOnButton.yScale = soundOnButton.xScale
-            self.addChild(soundOnButton)
+            soundButton.name = "soundButton"
+            soundButton.zPosition = 7
+            soundButton.xScale = 0.1
+            soundButton.position.x = soundTitle.position.x + 100
+            soundButton.position.y = soundTitle.position.y + 15
+            soundButton.yScale = soundButton.xScale
+            self.addChild(soundButton)
             
             let notificationTitle = SKLabelNode(text: "Notifications")
             notificationTitle.fontSize = 40
@@ -78,13 +93,18 @@ class MenuBillBoard : SKSpriteNode {
             notificationTitle.position.x = soundTitle.position.x + 40
             self.addChild(notificationTitle)
             
-            let notificationsSwitch = SKSpriteNode(imageNamed: "notsOn")
-            notificationsSwitch.name = "NotificationsButton"
-            notificationsSwitch.zPosition = 7
-            notificationsSwitch.size = CGSize(width: 150, height: 75)
-            notificationsSwitch.position.x = notificationTitle.position.x + 180
-            notificationsSwitch.position.y = notificationTitle.position.y + 15
-            self.addChild(notificationsSwitch)
+            if notificationsSwitchedOn {
+                notificationButton = SKSpriteNode(imageNamed: "notsOn")
+            }else{
+                notificationButton = SKSpriteNode(imageNamed: "notsOff")
+            }
+            
+            notificationButton.name = "NotificationsButton"
+            notificationButton.zPosition = 7
+            notificationButton.size = CGSize(width: 150, height: 75)
+            notificationButton.position.x = notificationTitle.position.x + 180
+            notificationButton.position.y = notificationTitle.position.y + 15
+            self.addChild(notificationButton)
             
             
         }else if withnode == "ShopFence" {
@@ -92,6 +112,10 @@ class MenuBillBoard : SKSpriteNode {
         }else if withnode == "StatsFence" {
             print("You touched the StatsFence fence")
         }else if withnode == "CreditsFence" {
+            
+            let credits = CreditsPage()
+            credits.runCredits(onNode: self)
+            
             print("You touched the CreditsFence fence")
         }
         moveMenuBillBoard(scene: scene)
@@ -102,19 +126,27 @@ class MenuBillBoard : SKSpriteNode {
     
     func moveMenuBillBoard(scene : SKScene){
         let billBoardFinalPos = CGPoint(x: scene.frame.midX, y: scene.frame.midY)
-        let billBoardMoveAction = SKAction.move(to: billBoardFinalPos, duration: 0.7)
-        self.run(billBoardMoveAction)
+        self.run(SKAction.move(to: billBoardFinalPos, duration: 0.7)) {
+            let wait = SKAction.wait(forDuration: self.timerInterval)
+            self.run(wait, completion: {
+                
+            })
+        }
     }
     
     func removeMenuBoard(scene : SKScene){
         let soundMaker = SoundManager()
         soundMaker.playASound(scene: scene, fileNamed: "buttonClick")
         
-        let timerInterval = 1.0
         let moveBillBoardOffScreen = SKAction.moveTo(x: scene.frame.minX - self.frame.size.width, duration: timerInterval)
-        self.run(moveBillBoardOffScreen)
-        
-        _ = Timer.scheduledTimer(timeInterval: timerInterval, target: scene, selector: #selector(GameScene.removeAllActionsAndSprites), userInfo: nil, repeats: false)
+        self.run(moveBillBoardOffScreen) {
+            checkForOutOfBoundSprites(amountOfSeconds: self.timerInterval, onScene: scene)
+            }
+        }
     }
-}
+    
+    func checkForOutOfBoundSprites(amountOfSeconds : Double, onScene : SKScene){
+        _ = Timer.scheduledTimer(timeInterval: amountOfSeconds, target: onScene, selector: #selector(GameScene.removeAllActionsAndSprites), userInfo: nil, repeats: false)
+    }
+
 

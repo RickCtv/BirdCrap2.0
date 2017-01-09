@@ -20,7 +20,7 @@ class SoundManager{
             let soundToplay = SKAction.playSoundFileNamed(fileNamed, waitForCompletion: false)
             scene.run(soundToplay)
         }else{
-            
+            print("Sound File could not be played in SOUNDMANAGER, You could have swithced the sound off OR you need to enusre you have spelt the name of the sound correctly")
         }
     }
 }
