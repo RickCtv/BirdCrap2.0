@@ -20,6 +20,8 @@ class GameScene: SKScene {
     var billboard : MenuBillBoard!
     var startButton : SpriteCreator!
     var userTouched = true
+    var character : Character!
+    var house : SpriteCreator!
     
     
     override func didMove(to view: SKView) {
@@ -40,7 +42,7 @@ class GameScene: SKScene {
         _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
         
         //Make Character
-        let character = Character(scene: self, texture: "grandad")
+        character = Character(scene: self, texture: "grandad")
         self.addChild(character)
         
         //Make Sun
@@ -80,7 +82,7 @@ class GameScene: SKScene {
     }
     
     func createGround(){
-        let ground = SpriteCreator(scene: self, texture: "ground", zPosition: 4, anchorPoints : CGPoint(x: 0.5, y: 0))
+        let ground = SpriteCreator(scene: self, texture: "ground", zPosition: 5, anchorPoints : CGPoint(x: 0.5, y: 0))
         ground.size = CGSize(width: self.frame.size.width, height: 150)
         ground.position = CGPoint(x: self.frame.midX, y: self.frame.minY)
         self.addChild(ground)
@@ -88,7 +90,7 @@ class GameScene: SKScene {
     
     func createTitle(){
         let title = SKLabelNode(fontNamed: gameFont)
-        title.text = "Bird Crap"
+        title.text = "My Grandad"
         title.fontSize = 100
         title.position = CGPoint(x: self.frame.midX, y: self.frame.maxY - (title.frame.size.height * 3))
         title.fontColor = UIColor.black
@@ -112,7 +114,7 @@ class GameScene: SKScene {
     }
     
     func createHouse(){
-        let house = SpriteCreator(scene: self, texture: "house", zPosition: 3, anchorPoints: CGPoint(x: 0.5, y: 0.5))
+        house = SpriteCreator(scene: self, texture: "house", zPosition: 4, anchorPoints: CGPoint(x: 0.5, y: 0.5))
         house.xScale = 0.4
         house.yScale = house.xScale
         house.position = CGPoint(x: self.frame.minX + house.frame.size.width / 2 - 70, y: self.frame.minY + house.frame.size.height / 2 + 120)
@@ -193,6 +195,49 @@ class GameScene: SKScene {
         })
     }
     
+    func openAndCloseHouse(){
+        let removeStartButton = SKAction.fadeOut(withDuration: 0.5)
+        startButton.isUserInteractionEnabled = false
+        startButton.run(removeStartButton) { 
+            self.startButton.removeFromParent()
+        }
+        
+        let wait = SKAction.wait(forDuration: 1.8)
+        let newHouse = SpriteCreator(scene: self, texture: "HouseOpen", zPosition: 2, anchorPoints: self.house.anchorPoint)
+        newHouse.size = self.house.size
+        newHouse.position = self.house.position
+        self.addChild(newHouse)
+        
+        self.run(wait) {
+            self.house.texture = SKTexture(imageNamed: "HouseOpenNoDoor")
+            self.soundMaker.playASound(scene: self, fileNamed: "OpenDoorSoundEffect")
+            
+            self.run(SKAction.wait(forDuration: 1), completion: { 
+                self.house.texture = SKTexture(imageNamed: "house")
+                self.soundMaker.playASound(scene: self, fileNamed: "CloseDoorSoundEffect")
+                
+                newHouse.removeFromParent()
+            })
+        }
+        
+    }
+    
+    func prepareForNewScene(){
+        let waitForDuration = SKAction.wait(forDuration: 4)
+        self.bgAudioPlayer.setVolume(0, fadeDuration: 2.6)
+        self.run(waitForDuration) {
+            self.removeAllActions()
+            self.removeFromParent()
+            
+            let homeScene = HouseScene(size: self.size)
+            homeScene.scaleMode = .aspectFill
+            homeScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+             let reveal = SKTransition.fade(withDuration: 1)
+            self.view?.presentScene(homeScene, transition: reveal)
+            
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     
         for touch in touches {
@@ -227,7 +272,12 @@ class GameScene: SKScene {
             }else if node.name == "NotificationsButton" {
                 notificationSwitcher(node: node)
             }else if node.name == "goButton" {
-                print("Touched START GAME BUTTON")
+                soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                character.startButtonPressed(onScene: self)
+                openAndCloseHouse()
+                touchManager.goWasTouched(scene: self)
+                prepareForNewScene()
+
             }else {
                 userTouched = false
             }

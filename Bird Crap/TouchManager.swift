@@ -31,4 +31,21 @@ class TouchManager {
             }
         }
     }
+    
+    func goWasTouched(scene : SKScene){
+        for button in menuButtonsArray{
+         
+            let FinalLocationY = CGPoint(x: button.position.x, y: scene.frame.midY)
+            let FinalLocationX = CGPoint(x: scene.frame.minX - button.frame.size.width, y: scene.frame.midY)
+            let moveUpAction = SKAction.move(to: FinalLocationY, duration: 0.3)
+            let moveLeftAction = SKAction.move(to: FinalLocationX, duration: 0.3)
+            
+            let runSequence = SKAction.sequence([moveUpAction, moveLeftAction])
+            button.run(runSequence, completion: { 
+                button.removeFromParent()
+            })
+            button.isUserInteractionEnabled = true
+            
+        }
+    }
 }
