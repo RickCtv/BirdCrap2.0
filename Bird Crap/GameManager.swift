@@ -14,7 +14,8 @@ var menuButtonsArray = [SKSpriteNode]()
 var musicSoundIsOn = true
 var otherSoundIsOn = true
 var notificationsSwitchedOn = true
-var gameFont = "IndieFlower"
+let gameFont = "IndieFlower"
+let gameTitleName = "My Granpa"
 
 func RandomPointsBetweenWithFloat(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat{
     return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)

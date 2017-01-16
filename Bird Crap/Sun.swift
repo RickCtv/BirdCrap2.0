@@ -15,9 +15,9 @@ class Sun : SKSpriteNode {
         
         super.init(texture: texture , color: UIColor.clear, size: texture.size())
         
-        self.xScale = 0.3
+        self.xScale = 0.1
         self.yScale = self.xScale
-        self.zPosition = 4
+        self.zPosition = 2
         
         self.position = CGPoint(x: scene.frame.minX + 20, y: scene.frame.maxY - 40)
         

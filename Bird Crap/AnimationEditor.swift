@@ -11,10 +11,6 @@ import SpriteKit
 
 class AnimationEditor {
     
-    init(){
-
-    }
-    
     func fadeIn(node : SKSpriteNode, withDuration : Double){
         node.alpha = 0
         let fadeIn = SKAction.fadeAlpha(to: 1, duration: withDuration)
@@ -23,7 +19,9 @@ class AnimationEditor {
     
     func fadeOut(node : SKSpriteNode, withDuration : Double){
         let fadeOut = SKAction.fadeAlpha(to: 0, duration: withDuration)
-        node.run(fadeOut)
+        node.run(fadeOut) {
+           node.removeFromParent()
+        }
     }
     
     func fadeInLabel(node : SKLabelNode, withDuration : Double){
@@ -34,7 +32,9 @@ class AnimationEditor {
     
     func fadeOutLabel(node : SKLabelNode, withDuration : Double){
         let fadeOut = SKAction.fadeAlpha(to: 0, duration: withDuration)
-        node.run(fadeOut)
+        node.run(fadeOut) { 
+            
+        }
     }
     
     func waitForNumberOfSeconds(amountOfSeconds : TimeInterval, onNode : SKLabelNode){

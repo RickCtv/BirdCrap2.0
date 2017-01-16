@@ -11,15 +11,16 @@ import SpriteKit
 
 class MenuButton : SKSpriteNode{
     
-    let firstSpriteStartPos : CGFloat = 50
-    let spaceBelowOtherSprites : CGFloat = 70
+    var firstSpriteStartPos : CGFloat = 40
+    var spaceBelowOtherSprites : CGFloat = 25
         
     init(scene : SKScene, imageName : String, moveDownFromSprite : SKSpriteNode?) {
         //Randomly Choose a Cloud Image to display
         let texture = SKTexture(imageNamed: imageName)
         super.init(texture: texture , color: UIColor.clear, size: texture.size())
         
-        self.xScale = 0.7
+        
+        self.xScale = 0.3
         self.yScale = self.xScale
         self.zPosition = 11
         self.name = imageName
@@ -27,7 +28,7 @@ class MenuButton : SKSpriteNode{
         if moveDownFromSprite == nil {
             self.position = CGPoint(
                 x: scene.frame.maxX + self.frame.size.width,
-                y: scene.frame.midY - self.frame.size.height + firstSpriteStartPos)
+                y: scene.frame.midY + firstSpriteStartPos)
         }else{
             self.position = CGPoint(
                 x: scene.frame.maxX + self.frame.size.width,
@@ -46,7 +47,7 @@ class MenuButton : SKSpriteNode{
         if menuButtonsArray.count == 1{
             pointToMoveTo = CGPoint(
                 x: scene.frame.maxX - self.position.x / randomValue,
-                y: scene.frame.midY - self.frame.size.height + firstSpriteStartPos)
+                y: self.position.y)
             
         }else{
             pointToMoveTo = CGPoint(
@@ -54,13 +55,10 @@ class MenuButton : SKSpriteNode{
                 y: (self.position.y) - scene.frame.midY )
         }
         
-        let action = SKAction.move(to: pointToMoveTo, duration: randomBetweenNumbersDouble(firstNum: 1, secondNum: 2))
+        let action = SKAction.move(to: pointToMoveTo, duration: randomBetweenNumbersDouble(firstNum: 0.5, secondNum: 1))
         self.run(action)
-        
     }
-    
-    
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

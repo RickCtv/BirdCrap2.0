@@ -42,7 +42,7 @@ class TouchManager {
             
             let runSequence = SKAction.sequence([moveUpAction, moveLeftAction])
             button.run(runSequence, completion: { 
-                button.removeFromParent()
+                
             })
             button.isUserInteractionEnabled = true
             

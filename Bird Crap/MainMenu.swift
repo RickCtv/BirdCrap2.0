@@ -9,57 +9,122 @@
 import SpriteKit
 import GameplayKit
 import AVFoundation
+import UIKit
+import Firebase
 
-class GameScene: SKScene {
+class MainMenu: SKScene {
     
     var bgAudioPlayer = AVAudioPlayer()
     let soundMaker = SoundManager()
     let animator = AnimationEditor()
     let touchManager = TouchManager()
     var displayingMenuBoard = false
+    var userTouched = true
+    var startTouched = false
     var billboard : MenuBillBoard!
     var startButton : SpriteCreator!
-    var userTouched = true
     var character : Character!
+    var ground : SpriteCreator!
     var house : SpriteCreator!
+    var title = SKLabelNode(fontNamed: gameFont)
+    var cloudArray : [Cloud]!
     
     
     override func didMove(to view: SKView) {
         makeMainMenu()
-        
     }
     
     func makeMainMenu(){
-        self.backgroundColor = UIColor(red: 51 / 255, green: 204 / 255, blue: 255 / 255, alpha: 1)
+        cloudArray = []
         createBGMusic()
+        makeDayOrNight()
         createStartButton()
         createMenuButtons()
         createGround()
         createHouse()
         createTitle()
-        
-        //Create Clouds
-        _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(GameScene.createCloud), userInfo: nil, repeats: true)
-        
+        makeCharacter()
+    }
+    
+    func makeCharacter(){
         //Make Character
         character = Character(scene: self, texture: "grandad")
+        character.position = CGPoint(x: house.frame.maxY - character.frame.size.width * 2, y: ground.frame.maxY - character.frame.size.height / 3)
         self.addChild(character)
+    }
+    
+    func makeDayOrNight(){
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = Int(calendar.component(.hour, from: date))
         
+        //It is day time
+        if hour > 9 && hour < 20 {
+            isDayTime()
+            
+            //It is night time
+        }else{
+            isNightTime()
+        }
+    }
+    
+    func isDayTime(){
+        title.fontColor = SKColor.black
+        self.backgroundColor = UIColor(red: 51 / 255, green: 204 / 255, blue: 255 / 255, alpha: 1)
         //Make Sun
         let sun = Sun(scene: self, texture: "Sun")
         self.addChild(sun)
+        
+        //Create Clouds
+        _ = Timer.scheduledTimer(timeInterval: randomBetweenNumbersDouble(firstNum: 5, secondNum: 9), target: self, selector: #selector(MainMenu.createCloud), userInfo: nil, repeats: true)
+    }
+    
+    func isNightTime(){
+        title.fontColor = SKColor.white
+        self.backgroundColor = UIColor(red: 25 / 255, green: 74 / 255, blue: 109 / 255, alpha: 1)
+        let moon = SpriteCreator(scene: self, texture: "moon", zPosition: 3, anchorPoints: nil)
+        moon.xScale = 0.3
+        moon.yScale = moon.xScale
+        moon.alpha = 0.6
+        
+        moon.position = CGPoint(x: self.frame.minX + 50, y: self.frame.maxY - 50)
+        self.addChild(moon)
+        
+        for _ in 1...20 {
+            let star = SpriteCreator(scene: self, texture: "Star", zPosition: 1, anchorPoints: nil)
+            star.xScale = 0.01
+            star.yScale = star.xScale
+            star.alpha = 0
+            let minToMaxX = RandomPointsBetweenWithFloat(firstNum: self.frame.minX, secondNum: self.frame.maxX)
+            let minToMaxY = RandomPointsBetweenWithFloat(firstNum: self.frame.midY - 20, secondNum: self.frame.maxY)
+            star.position = CGPoint(x: minToMaxX, y: minToMaxY)
+            self.addChild(star)
+            
+            let smallestTime : Double = 2
+            let longestTime : Double = 5
+            let animFadeOut = SKAction.fadeAlpha(to: 0, duration: randomBetweenNumbersDouble(firstNum: smallestTime, secondNum: longestTime))
+            let animFadeIn = SKAction.fadeAlpha(to: 0.6, duration: randomBetweenNumbersDouble(firstNum: smallestTime, secondNum: longestTime))
+            let seq = SKAction.sequence([animFadeIn, animFadeOut])
+            let forever = SKAction.repeatForever(seq)
+            star.run(forever)
+            
+        }
     }
     
     func createStartButton(){
         //Make Start Button
-        startButton = SpriteCreator(scene: self, texture: "goButton", zPosition: 7, anchorPoints : nil)
-        startButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-        self.addChild(startButton)
-        animator.fadeIn(node: startButton, withDuration: 2.5)
+        
+            startButton = SpriteCreator(scene: self, texture: "createNewGranpa", zPosition: 7, anchorPoints : nil)
+            startButton.xScale = 0.4
+            startButton.yScale = startButton.xScale
+            startButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+            animator.fadeIn(node: startButton, withDuration: 1.5)
+            self.addChild(startButton)
     }
     
     func createCloud(){
         let cloud = Cloud(scene: self)
+        cloudArray.append(cloud)
         self.addChild(cloud)
     }
     
@@ -82,18 +147,16 @@ class GameScene: SKScene {
     }
     
     func createGround(){
-        let ground = SpriteCreator(scene: self, texture: "ground", zPosition: 5, anchorPoints : CGPoint(x: 0.5, y: 0))
-        ground.size = CGSize(width: self.frame.size.width, height: 150)
+        ground = SpriteCreator(scene: self, texture: "ground", zPosition: 5, anchorPoints : CGPoint(x: 0.5, y: 0))
+        ground.size = CGSize(width: self.frame.size.width, height: 50)
         ground.position = CGPoint(x: self.frame.midX, y: self.frame.minY)
         self.addChild(ground)
     }
     
     func createTitle(){
-        let title = SKLabelNode(fontNamed: gameFont)
-        title.text = "My Grandad"
-        title.fontSize = 100
-        title.position = CGPoint(x: self.frame.midX, y: self.frame.maxY - (title.frame.size.height * 3))
-        title.fontColor = UIColor.black
+        title.text = gameTitleName
+        title.fontSize = 40
+        title.position = CGPoint(x: self.frame.midX, y: self.frame.maxY - title.frame.height)
         title.zPosition = 100
         self.addChild(title)
     }
@@ -114,10 +177,10 @@ class GameScene: SKScene {
     }
     
     func createHouse(){
-        house = SpriteCreator(scene: self, texture: "house", zPosition: 4, anchorPoints: CGPoint(x: 0.5, y: 0.5))
-        house.xScale = 0.4
+        house = SpriteCreator(scene: self, texture: "house", zPosition: 4, anchorPoints: CGPoint(x: 0.5, y: 0))
+        house.xScale = 0.2
         house.yScale = house.xScale
-        house.position = CGPoint(x: self.frame.minX + house.frame.size.width / 2 - 70, y: self.frame.minY + house.frame.size.height / 2 + 120)
+        house.position = CGPoint(x: self.frame.minX + house.frame.size.width / 2 - 50, y: ground.frame.maxY - 15)
         
         self.addChild(house)
     }
@@ -178,11 +241,14 @@ class GameScene: SKScene {
             self.addChild(billboard)
             displayingMenuBoard = true
             nodeWasPressedSoWaitForAction(numberOfSecs: 1)
+            
         }else {
             billboard.removeMenuBoard(scene: self)
             createMenuButtons()
+            createStartButton()
             displayingMenuBoard = false
-            nodeWasPressedSoWaitForAction(numberOfSecs: 2)
+            nodeWasPressedSoWaitForAction(numberOfSecs: 1)
+            
         }
     }
     
@@ -196,12 +262,6 @@ class GameScene: SKScene {
     }
     
     func openAndCloseHouse(){
-        let removeStartButton = SKAction.fadeOut(withDuration: 0.5)
-        startButton.isUserInteractionEnabled = false
-        startButton.run(removeStartButton) { 
-            self.startButton.removeFromParent()
-        }
-        
         let wait = SKAction.wait(forDuration: 1.8)
         let newHouse = SpriteCreator(scene: self, texture: "HouseOpen", zPosition: 2, anchorPoints: self.house.anchorPoint)
         newHouse.size = self.house.size
@@ -219,7 +279,22 @@ class GameScene: SKScene {
                 newHouse.removeFromParent()
             })
         }
-        
+    }
+    
+    func continueButtonPressedAction(){
+        let removeStartButton = SKAction.fadeOut(withDuration: 0.5)
+        startButton.isUserInteractionEnabled = false
+        startButton.run(removeStartButton) {
+            self.startButton.removeFromParent()
+        }
+    }
+    
+    func createGranpaPressed(){
+        let removeButton = SKAction.moveTo(y: self.frame.maxY + startButton.frame.size.height, duration: 0.4)
+        startButton.run(removeButton) { 
+            self.startButton.removeFromParent()
+            
+        }
     }
     
     func prepareForNewScene(){
@@ -227,14 +302,24 @@ class GameScene: SKScene {
         self.bgAudioPlayer.setVolume(0, fadeDuration: 2.6)
         self.run(waitForDuration) {
             self.removeAllActions()
+            self.removeAllChildren()
             self.removeFromParent()
             
-            let homeScene = HouseScene(size: self.size)
-            homeScene.scaleMode = .aspectFill
-            homeScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            let createGramps = CreateGranpa(size: self.size)
+            createGramps.scaleMode = .aspectFill
+            createGramps.anchorPoint = CGPoint(x: 0.5, y: 0.5)
              let reveal = SKTransition.fade(withDuration: 1)
-            self.view?.presentScene(homeScene, transition: reveal)
+            self.view?.presentScene(createGramps, transition: reveal)
             
+        }
+    }
+    
+    func manageClouds(){
+        if cloudArray.count > 0{
+            if (cloudArray.first?.position.x)! < self.frame.minX - 100 {
+                cloudArray.first?.removeFromParent()
+                cloudArray.remove(at: 0)
+            }
         }
     }
     
@@ -271,13 +356,33 @@ class GameScene: SKScene {
                 
             }else if node.name == "NotificationsButton" {
                 notificationSwitcher(node: node)
-            }else if node.name == "goButton" {
-                soundMaker.playASound(scene: self, fileNamed: "buttonClick")
-                character.startButtonPressed(onScene: self)
-                openAndCloseHouse()
-                touchManager.goWasTouched(scene: self)
-                prepareForNewScene()
-
+            }else if node.name == "createNewGranpa" {
+                //This would be clicked if user has never started a game before
+                //Need to change this so granpa is not visible at this first stage
+                
+                if startTouched == false{
+                    startTouched = true
+                    createGranpaPressed()
+                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                    character.startButtonPressed(onScene: self)
+                    openAndCloseHouse()
+                    touchManager.goWasTouched(scene: self)
+                    
+                    //prepareForNewScene()
+                }
+            }else if node.name == "continueGame" {
+                //This would be clicked if user has a saved game
+                
+                if startTouched == false{
+                    startTouched = true
+                    continueButtonPressedAction()
+                    soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                    character.startButtonPressed(onScene: self)
+                    openAndCloseHouse()
+                    touchManager.goWasTouched(scene: self)
+                    prepareForNewScene()
+                }
+                
             }else {
                 userTouched = false
             }
@@ -285,6 +390,6 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
+        manageClouds()
     }
 }

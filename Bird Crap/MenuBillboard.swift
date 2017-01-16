@@ -34,8 +34,8 @@ class MenuBillBoard : SKSpriteNode {
             self.soundButton = SKSpriteNode(imageNamed: "SoundOffButton")
         }
         
-        self.xScale = 1
-        self.yScale = 1
+        self.xScale = 0.6
+        self.yScale = self.xScale
         self.position.x = scene.frame.maxX + (self.frame.size.width - 70)
         self.position.y = scene.frame.midY
         self.zPosition = 12
@@ -146,7 +146,7 @@ class MenuBillBoard : SKSpriteNode {
     }
     
     func checkForOutOfBoundSprites(amountOfSeconds : Double, onScene : SKScene){
-        _ = Timer.scheduledTimer(timeInterval: amountOfSeconds, target: onScene, selector: #selector(GameScene.removeAllActionsAndSprites), userInfo: nil, repeats: false)
+        _ = Timer.scheduledTimer(timeInterval: amountOfSeconds, target: onScene, selector: #selector(MainMenu.removeAllActionsAndSprites), userInfo: nil, repeats: false)
     }
 
 

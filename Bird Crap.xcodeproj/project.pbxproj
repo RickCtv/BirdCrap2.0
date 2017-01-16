@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1661240A41073E732A4C804C /* Pods_Bird_Crap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */; };
 		734726031E00732200B0E892 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726021E00732200B0E892 /* Cloud.swift */; };
 		7347260A1E0085B600B0E892 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726091E0085B600B0E892 /* Character.swift */; };
 		7347260C1E00892900B0E892 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7347260B1E00892900B0E892 /* SoundManager.swift */; };
@@ -19,7 +20,7 @@
 		7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7361E2B41E01C6E100705A80 /* MenuBillboard.swift */; };
 		739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */; };
 		739B7FED1DFD90D500A022E7 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 739B7FEC1DFD90D500A022E7 /* GameScene.sks */; };
-		739B7FF11DFD90D500A022E7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FF01DFD90D500A022E7 /* GameScene.swift */; };
+		739B7FF11DFD90D500A022E7 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FF01DFD90D500A022E7 /* MainMenu.swift */; };
 		739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FF21DFD90D500A022E7 /* GameViewController.swift */; };
 		739B7FF61DFD90D500A022E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 739B7FF41DFD90D500A022E7 /* Main.storyboard */; };
 		739B7FFB1DFD90D500A022E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 739B7FF91DFD90D500A022E7 /* LaunchScreen.storyboard */; };
@@ -29,10 +30,15 @@
 		739B80231DFDB29600A022E7 /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 739B80221DFDB29600A022E7 /* bgMusic.mp3 */; };
 		739B80261DFDC1EF00A022E7 /* IndieFlower.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 739B80251DFDC1EF00A022E7 /* IndieFlower.ttf */; };
 		739B80281DFDE7FC00A022E7 /* buttonClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 739B80271DFDE7FC00A022E7 /* buttonClick.mp3 */; };
+		73A5955C1E2AA390007106F0 /* CheckWifiStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955B1E2AA390007106F0 /* CheckWifiStatus.swift */; };
+		73A5955E1E2AA46B007106F0 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */; };
+		73A595601E2AEF63007106F0 /* CreateGranpa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955F1E2AEF63007106F0 /* CreateGranpa.swift */; };
 		73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5DAC81E0861DC00979815 /* TouchManager.swift */; };
 		73DEB3831E2593F3008E85DF /* CloseDoorSoundEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 73DEB3811E2593F3008E85DF /* CloseDoorSoundEffect.mp3 */; };
 		73DEB3841E2593F3008E85DF /* OpenDoorSoundEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 73DEB3821E2593F3008E85DF /* OpenDoorSoundEffect.mp3 */; };
 		73DEB3861E259A1F008E85DF /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DEB3851E259A1F008E85DF /* HouseScene.swift */; };
+		73F5745C1E2D409F00385D25 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F5745B1E2D409F00385D25 /* UserData.swift */; };
+		73FDE9691E2D3B980097A16F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		194FAC302ADA416F816299FB /* Pods_Bird_CrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_CrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		734726021E00732200B0E892 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		734726091E0085B600B0E892 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		7347260B1E00892900B0E892 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
@@ -66,7 +73,7 @@
 		739B7FE71DFD90D500A022E7 /* Bird Crap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bird Crap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		739B7FEC1DFD90D500A022E7 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		739B7FF01DFD90D500A022E7 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		739B7FF01DFD90D500A022E7 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		739B7FF21DFD90D500A022E7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		739B7FF51DFD90D500A022E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		739B7FFA1DFD90D500A022E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -81,10 +88,19 @@
 		739B80221DFDB29600A022E7 /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgMusic.mp3; sourceTree = "<group>"; };
 		739B80251DFDC1EF00A022E7 /* IndieFlower.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndieFlower.ttf; sourceTree = "<group>"; };
 		739B80271DFDE7FC00A022E7 /* buttonClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buttonClick.mp3; sourceTree = "<group>"; };
+		73A5955B1E2AA390007106F0 /* CheckWifiStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckWifiStatus.swift; path = ../CheckWifiStatus.swift; sourceTree = "<group>"; };
+		73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		73A5955F1E2AEF63007106F0 /* CreateGranpa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGranpa.swift; sourceTree = "<group>"; };
 		73C5DAC81E0861DC00979815 /* TouchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchManager.swift; sourceTree = "<group>"; };
 		73DEB3811E2593F3008E85DF /* CloseDoorSoundEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseDoorSoundEffect.mp3; sourceTree = "<group>"; };
 		73DEB3821E2593F3008E85DF /* OpenDoorSoundEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenDoorSoundEffect.mp3; sourceTree = "<group>"; };
 		73DEB3851E259A1F008E85DF /* HouseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseScene.swift; sourceTree = "<group>"; };
+		73F5745B1E2D409F00385D25 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_Crap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		98AE4FD19C9B8D69FF10BB9B /* Pods-Bird Crap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bird Crap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bird Crap/Pods-Bird Crap.debug.xcconfig"; sourceTree = "<group>"; };
+		D2A2A248E5D0157C8910FB79 /* Pods_Bird_CrapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_CrapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F846EB60131AA50AFCF58F59 /* Pods-Bird Crap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bird Crap.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bird Crap/Pods-Bird Crap.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1661240A41073E732A4C804C /* Pods_Bird_Crap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +129,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		314813B5A95B1DB05B312E0A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */,
+				194FAC302ADA416F816299FB /* Pods_Bird_CrapTests.framework */,
+				D2A2A248E5D0157C8910FB79 /* Pods_Bird_CrapUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AA4EC722C8557C3AF6D9505 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				98AE4FD19C9B8D69FF10BB9B /* Pods-Bird Crap.debug.xcconfig */,
+				F846EB60131AA50AFCF58F59 /* Pods-Bird Crap.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		734725FC1E006DFC00B0E892 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,8 +159,10 @@
 		734725FD1E006E0C00B0E892 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				739B7FF01DFD90D500A022E7 /* GameScene.swift */,
+				73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */,
+				739B7FF01DFD90D500A022E7 /* MainMenu.swift */,
 				73DEB3851E259A1F008E85DF /* HouseScene.swift */,
+				73A5955F1E2AEF63007106F0 /* CreateGranpa.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -148,6 +186,7 @@
 		734726001E006E3B00B0E892 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */,
 				739B7FF41DFD90D500A022E7 /* Main.storyboard */,
 				739B7FF91DFD90D500A022E7 /* LaunchScreen.storyboard */,
 			);
@@ -170,6 +209,7 @@
 		734726041E00739C00B0E892 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				73A5955B1E2AA390007106F0 /* CheckWifiStatus.swift */,
 				734726021E00732200B0E892 /* Cloud.swift */,
 				734726091E0085B600B0E892 /* Character.swift */,
 				7347260B1E00892900B0E892 /* SoundManager.swift */,
@@ -181,6 +221,7 @@
 				734726151E00C7D400B0E892 /* CreditsPage.swift */,
 				734726171E00CDBB00B0E892 /* SpriteCreator.swift */,
 				734726191E00D2A400B0E892 /* AnimationEditor.swift */,
+				73F5745B1E2D409F00385D25 /* UserData.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -192,6 +233,8 @@
 				739B80041DFD90D600A022E7 /* Bird CrapTests */,
 				739B800F1DFD90D600A022E7 /* Bird CrapUITests */,
 				739B7FE81DFD90D500A022E7 /* Products */,
+				3AA4EC722C8557C3AF6D9505 /* Pods */,
+				314813B5A95B1DB05B312E0A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -245,9 +288,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 739B80151DFD90D600A022E7 /* Build configuration list for PBXNativeTarget "Bird Crap" */;
 			buildPhases = (
+				0F6139518DBFEAFE41ED2763 /* [CP] Check Pods Manifest.lock */,
 				739B7FE31DFD90D500A022E7 /* Sources */,
 				739B7FE41DFD90D500A022E7 /* Frameworks */,
 				739B7FE51DFD90D500A022E7 /* Resources */,
+				ED604629D18B8620A48CAC94 /* [CP] Embed Pods Frameworks */,
+				C957BA67A4437685BF4A6A86 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -355,6 +401,7 @@
 				739B80211DFDA3CD00A022E7 /* Assets.xcassets in Resources */,
 				739B80281DFDE7FC00A022E7 /* buttonClick.mp3 in Resources */,
 				739B7FFB1DFD90D500A022E7 /* LaunchScreen.storyboard in Resources */,
+				73FDE9691E2D3B980097A16F /* GoogleService-Info.plist in Resources */,
 				73DEB3831E2593F3008E85DF /* CloseDoorSoundEffect.mp3 in Resources */,
 				739B80261DFDC1EF00A022E7 /* IndieFlower.ttf in Resources */,
 			);
@@ -376,15 +423,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0F6139518DBFEAFE41ED2763 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C957BA67A4437685BF4A6A86 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bird Crap/Pods-Bird Crap-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED604629D18B8620A48CAC94 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bird Crap/Pods-Bird Crap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		739B7FE31DFD90D500A022E7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				739B7FF11DFD90D500A022E7 /* GameScene.swift in Sources */,
+				739B7FF11DFD90D500A022E7 /* MainMenu.swift in Sources */,
 				7347260C1E00892900B0E892 /* SoundManager.swift in Sources */,
 				7347260E1E00970C00B0E892 /* Sun.swift in Sources */,
+				73F5745C1E2D409F00385D25 /* UserData.swift in Sources */,
+				73A5955C1E2AA390007106F0 /* CheckWifiStatus.swift in Sources */,
 				7347260A1E0085B600B0E892 /* Character.swift in Sources */,
+				73A5955E1E2AA46B007106F0 /* LoadingScreen.swift in Sources */,
 				73DEB3861E259A1F008E85DF /* HouseScene.swift in Sources */,
 				734726031E00732200B0E892 /* Cloud.swift in Sources */,
 				739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */,
@@ -393,6 +491,7 @@
 				7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */,
 				739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */,
 				734726161E00C7D400B0E892 /* CreditsPage.swift in Sources */,
+				73A595601E2AEF63007106F0 /* CreateGranpa.swift in Sources */,
 				734726141E00B76300B0E892 /* GameManager.swift in Sources */,
 				734726181E00CDBB00B0E892 /* SpriteCreator.swift in Sources */,
 				7347261A1E00D2A400B0E892 /* AnimationEditor.swift in Sources */,
@@ -547,27 +646,35 @@
 		};
 		739B80161DFD90D600A022E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98AE4FD19C9B8D69FF10BB9B /* Pods-Bird Crap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 79N25RX82N;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Bird Crap/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.screamjunkies.Bird-Crap";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		739B80171DFD90D600A022E7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F846EB60131AA50AFCF58F59 /* Pods-Bird Crap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 79N25RX82N;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "Bird Crap/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.screamjunkies.Bird-Crap";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
