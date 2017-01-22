@@ -26,10 +26,11 @@ class GameViewController: UIViewController {
             case .phone:
                 
                 // Load the SKScene from 'GameScene.sks'
-                let scene = LoadingScreen(size: CGSize(width: 1024, height: 768))
+                //NEED TO CHANGE THIS TO LOADING SCREEN WHEN READY
+                let scene = MainMenu(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
-                    scene.scaleMode = .aspectFit
+                    scene.scaleMode = .aspectFit 
                     scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
                 
                     // Present the scene

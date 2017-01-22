@@ -9,8 +9,9 @@
 import Foundation
 import Firebase
 
-class UserData {
-        private let dataBaseURL = "https://my-granpa.firebaseio.com/"
+class UserData2 {
+    
+    private let dataBaseURL = "https://my-granpa.firebaseio.com/"
     
     init(){
         
@@ -25,5 +26,9 @@ class UserData {
         
         
         //self.ref.child("users").setValue(["username": name])
+    }
+    
+    func checkUserSave(){
+        
     }
 }

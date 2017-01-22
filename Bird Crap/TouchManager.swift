@@ -36,7 +36,7 @@ class TouchManager {
         for button in menuButtonsArray{
          
             let FinalLocationY = CGPoint(x: button.position.x, y: scene.frame.midY)
-            let FinalLocationX = CGPoint(x: scene.frame.minX - button.frame.size.width, y: scene.frame.midY)
+            let FinalLocationX = CGPoint(x: scene.frame.maxX + button.frame.size.width, y: scene.frame.midY)
             let moveUpAction = SKAction.move(to: FinalLocationY, duration: 0.3)
             let moveLeftAction = SKAction.move(to: FinalLocationX, duration: 0.3)
             

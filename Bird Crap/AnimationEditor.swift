@@ -41,4 +41,9 @@ class AnimationEditor {
         let waitAction = SKAction.wait(forDuration: amountOfSeconds)
         onNode.run(waitAction)
     }
+    
+    func moveToPos(pos: CGPoint, onNode : SKSpriteNode, withTime : Double){
+        let action = SKAction.move(to: pos, duration: withTime)
+        onNode.run(action)
+    }
 }

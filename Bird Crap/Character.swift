@@ -20,16 +20,14 @@ class Character: SKSpriteNode {
         self.xScale = 0.1
         self.yScale = self.xScale
         self.anchorPoint = CGPoint(x: 0.5, y: 0)
-        //self.position = CGPoint(x: scene.frame.midX - 40, y: scene.frame.minY + 20)
         self.zPosition = 8
-                
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func startButtonPressed(onScene : SKScene){
+    func continueButtonPressed(onScene : SKScene){
         
         let timer : Double = 2
         
@@ -58,6 +56,26 @@ class Character: SKSpriteNode {
                 })
             })
             self.run(finalScale)
+        }
+    }
+    
+    func createButtonPressed(onScene : SKScene, toPos : CGPoint, timeToMove : Double){
+        
+        let rotateByAngleLeft = SKAction.rotate(byAngle: 0.09, duration: 0.15)
+        let holdRotation = SKAction.wait(forDuration: 1)
+        let wait = SKAction.wait(forDuration: 0.6)
+        let roateActionRight = rotateByAngleLeft.reversed()
+        
+        self.run(wait){
+            self.zPosition = 8
+            let seq = SKAction.sequence([rotateByAngleLeft, holdRotation, roateActionRight])
+            self.run(seq)
+            
+            let moveToPos = SKAction.move(to: toPos, duration: timeToMove)
+            self.run(moveToPos)
+            
+            let endScale = SKAction.scale(to: 0.1, duration: timeToMove)
+            self.run(endScale)
         }
     }
 }

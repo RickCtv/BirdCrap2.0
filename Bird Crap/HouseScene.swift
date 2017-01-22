@@ -20,10 +20,6 @@ class HouseScene: SKScene {
         self.addChild(label)
         self.addChild(label2)
         
-        let ground = SpriteCreator(scene: self, texture: "ground", zPosition: 5, anchorPoints: nil)
-        ground.position = CGPoint(x: self.frame.midX, y: self.frame.minY + ground.frame.size.height)
-        self.addChild(ground)
-        
     }
     
     override func update(_ currentTime: TimeInterval) {

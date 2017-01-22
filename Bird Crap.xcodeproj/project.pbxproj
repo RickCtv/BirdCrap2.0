@@ -17,6 +17,7 @@
 		734726161E00C7D400B0E892 /* CreditsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726151E00C7D400B0E892 /* CreditsPage.swift */; };
 		734726181E00CDBB00B0E892 /* SpriteCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726171E00CDBB00B0E892 /* SpriteCreator.swift */; };
 		7347261A1E00D2A400B0E892 /* AnimationEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726191E00D2A400B0E892 /* AnimationEditor.swift */; };
+		734D9E3E1E2EE66300046D87 /* CheckWifiStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734D9E3D1E2EE66300046D87 /* CheckWifiStatus.swift */; };
 		7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7361E2B41E01C6E100705A80 /* MenuBillboard.swift */; };
 		739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */; };
 		739B7FED1DFD90D500A022E7 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 739B7FEC1DFD90D500A022E7 /* GameScene.sks */; };
@@ -30,14 +31,18 @@
 		739B80231DFDB29600A022E7 /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 739B80221DFDB29600A022E7 /* bgMusic.mp3 */; };
 		739B80261DFDC1EF00A022E7 /* IndieFlower.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 739B80251DFDC1EF00A022E7 /* IndieFlower.ttf */; };
 		739B80281DFDE7FC00A022E7 /* buttonClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 739B80271DFDE7FC00A022E7 /* buttonClick.mp3 */; };
-		73A5955C1E2AA390007106F0 /* CheckWifiStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955B1E2AA390007106F0 /* CheckWifiStatus.swift */; };
+		73A5955C1E2AA390007106F0 /* WifiSystemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955B1E2AA390007106F0 /* WifiSystemConfig.swift */; };
 		73A5955E1E2AA46B007106F0 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */; };
-		73A595601E2AEF63007106F0 /* CreateGranpa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A5955F1E2AEF63007106F0 /* CreateGranpa.swift */; };
 		73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5DAC81E0861DC00979815 /* TouchManager.swift */; };
+		73D36CD51E32C320003B2DB2 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D36CD41E32C320003B2DB2 /* Camera.swift */; };
+		73D36CD91E33884D003B2DB2 /* ArrowClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D36CD81E33884D003B2DB2 /* ArrowClass.swift */; };
+		73D36CDB1E33B908003B2DB2 /* CalendarCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D36CDA1E33B908003B2DB2 /* CalendarCreator.swift */; };
+		73D36CDD1E351283003B2DB2 /* UsersData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D36CDC1E351283003B2DB2 /* UsersData.swift */; };
+		73D36CDF1E3522E2003B2DB2 /* CreateGrandpa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D36CDE1E3522E2003B2DB2 /* CreateGrandpa.swift */; };
 		73DEB3831E2593F3008E85DF /* CloseDoorSoundEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 73DEB3811E2593F3008E85DF /* CloseDoorSoundEffect.mp3 */; };
 		73DEB3841E2593F3008E85DF /* OpenDoorSoundEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 73DEB3821E2593F3008E85DF /* OpenDoorSoundEffect.mp3 */; };
 		73DEB3861E259A1F008E85DF /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DEB3851E259A1F008E85DF /* HouseScene.swift */; };
-		73F5745C1E2D409F00385D25 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F5745B1E2D409F00385D25 /* UserData.swift */; };
+		73F5745C1E2D409F00385D25 /* UserDataFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F5745B1E2D409F00385D25 /* UserDataFirebase.swift */; };
 		73FDE9691E2D3B980097A16F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +74,7 @@
 		734726151E00C7D400B0E892 /* CreditsPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsPage.swift; sourceTree = "<group>"; };
 		734726171E00CDBB00B0E892 /* SpriteCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpriteCreator.swift; sourceTree = "<group>"; };
 		734726191E00D2A400B0E892 /* AnimationEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationEditor.swift; sourceTree = "<group>"; };
+		734D9E3D1E2EE66300046D87 /* CheckWifiStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckWifiStatus.swift; sourceTree = "<group>"; };
 		7361E2B41E01C6E100705A80 /* MenuBillboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBillboard.swift; sourceTree = "<group>"; };
 		739B7FE71DFD90D500A022E7 /* Bird Crap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bird Crap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,14 +94,18 @@
 		739B80221DFDB29600A022E7 /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgMusic.mp3; sourceTree = "<group>"; };
 		739B80251DFDC1EF00A022E7 /* IndieFlower.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IndieFlower.ttf; sourceTree = "<group>"; };
 		739B80271DFDE7FC00A022E7 /* buttonClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buttonClick.mp3; sourceTree = "<group>"; };
-		73A5955B1E2AA390007106F0 /* CheckWifiStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckWifiStatus.swift; path = ../CheckWifiStatus.swift; sourceTree = "<group>"; };
+		73A5955B1E2AA390007106F0 /* WifiSystemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WifiSystemConfig.swift; path = ../WifiSystemConfig.swift; sourceTree = "<group>"; };
 		73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
-		73A5955F1E2AEF63007106F0 /* CreateGranpa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGranpa.swift; sourceTree = "<group>"; };
 		73C5DAC81E0861DC00979815 /* TouchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchManager.swift; sourceTree = "<group>"; };
+		73D36CD41E32C320003B2DB2 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		73D36CD81E33884D003B2DB2 /* ArrowClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowClass.swift; sourceTree = "<group>"; };
+		73D36CDA1E33B908003B2DB2 /* CalendarCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCreator.swift; sourceTree = "<group>"; };
+		73D36CDC1E351283003B2DB2 /* UsersData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersData.swift; sourceTree = "<group>"; };
+		73D36CDE1E3522E2003B2DB2 /* CreateGrandpa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGrandpa.swift; sourceTree = "<group>"; };
 		73DEB3811E2593F3008E85DF /* CloseDoorSoundEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseDoorSoundEffect.mp3; sourceTree = "<group>"; };
 		73DEB3821E2593F3008E85DF /* OpenDoorSoundEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenDoorSoundEffect.mp3; sourceTree = "<group>"; };
 		73DEB3851E259A1F008E85DF /* HouseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseScene.swift; sourceTree = "<group>"; };
-		73F5745B1E2D409F00385D25 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		73F5745B1E2D409F00385D25 /* UserDataFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataFirebase.swift; sourceTree = "<group>"; };
 		73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_Crap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AE4FD19C9B8D69FF10BB9B /* Pods-Bird Crap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bird Crap.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bird Crap/Pods-Bird Crap.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,7 +172,6 @@
 				73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */,
 				739B7FF01DFD90D500A022E7 /* MainMenu.swift */,
 				73DEB3851E259A1F008E85DF /* HouseScene.swift */,
-				73A5955F1E2AEF63007106F0 /* CreateGranpa.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -209,9 +218,14 @@
 		734726041E00739C00B0E892 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				73A5955B1E2AA390007106F0 /* CheckWifiStatus.swift */,
-				734726021E00732200B0E892 /* Cloud.swift */,
+				73D36CDE1E3522E2003B2DB2 /* CreateGrandpa.swift */,
+				73D36CDA1E33B908003B2DB2 /* CalendarCreator.swift */,
+				73D36CD41E32C320003B2DB2 /* Camera.swift */,
 				734726091E0085B600B0E892 /* Character.swift */,
+				73D36CD81E33884D003B2DB2 /* ArrowClass.swift */,
+				73A5955B1E2AA390007106F0 /* WifiSystemConfig.swift */,
+				734D9E3D1E2EE66300046D87 /* CheckWifiStatus.swift */,
+				734726021E00732200B0E892 /* Cloud.swift */,
 				7347260B1E00892900B0E892 /* SoundManager.swift */,
 				7347260D1E00970C00B0E892 /* Sun.swift */,
 				734726111E00A8E200B0E892 /* MenuButton.swift */,
@@ -221,7 +235,8 @@
 				734726151E00C7D400B0E892 /* CreditsPage.swift */,
 				734726171E00CDBB00B0E892 /* SpriteCreator.swift */,
 				734726191E00D2A400B0E892 /* AnimationEditor.swift */,
-				73F5745B1E2D409F00385D25 /* UserData.swift */,
+				73F5745B1E2D409F00385D25 /* UserDataFirebase.swift */,
+				73D36CDC1E351283003B2DB2 /* UsersData.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -477,23 +492,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				739B7FF11DFD90D500A022E7 /* MainMenu.swift in Sources */,
+				73D36CD91E33884D003B2DB2 /* ArrowClass.swift in Sources */,
 				7347260C1E00892900B0E892 /* SoundManager.swift in Sources */,
+				73D36CDF1E3522E2003B2DB2 /* CreateGrandpa.swift in Sources */,
 				7347260E1E00970C00B0E892 /* Sun.swift in Sources */,
-				73F5745C1E2D409F00385D25 /* UserData.swift in Sources */,
-				73A5955C1E2AA390007106F0 /* CheckWifiStatus.swift in Sources */,
+				73F5745C1E2D409F00385D25 /* UserDataFirebase.swift in Sources */,
+				73A5955C1E2AA390007106F0 /* WifiSystemConfig.swift in Sources */,
+				73D36CD51E32C320003B2DB2 /* Camera.swift in Sources */,
 				7347260A1E0085B600B0E892 /* Character.swift in Sources */,
 				73A5955E1E2AA46B007106F0 /* LoadingScreen.swift in Sources */,
+				73D36CDB1E33B908003B2DB2 /* CalendarCreator.swift in Sources */,
 				73DEB3861E259A1F008E85DF /* HouseScene.swift in Sources */,
 				734726031E00732200B0E892 /* Cloud.swift in Sources */,
 				739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */,
 				734726121E00A8E200B0E892 /* MenuButton.swift in Sources */,
 				73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */,
 				7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */,
+				734D9E3E1E2EE66300046D87 /* CheckWifiStatus.swift in Sources */,
 				739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */,
 				734726161E00C7D400B0E892 /* CreditsPage.swift in Sources */,
-				73A595601E2AEF63007106F0 /* CreateGranpa.swift in Sources */,
 				734726141E00B76300B0E892 /* GameManager.swift in Sources */,
 				734726181E00CDBB00B0E892 /* SpriteCreator.swift in Sources */,
+				73D36CDD1E351283003B2DB2 /* UsersData.swift in Sources */,
 				7347261A1E00D2A400B0E892 /* AnimationEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
