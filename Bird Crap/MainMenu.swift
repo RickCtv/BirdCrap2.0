@@ -117,15 +117,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
         self.addChild(cam)
     }
     
-    func moveCamera(){
-        let zoom :  CGFloat = 0.5
-        let finalPos = CGPoint(x: self.frame.minX + house.frame.size.width / 1.2,
-                               y: ground.frame.maxY / 2)
-        
-        cam.moveToPos(position: finalPos, withTime: 0.5, withZoom: zoom)
-    }
-    
-    
     func checkInternetConnection(){
         _ = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (timerthing) in
             if self.wifiStatus.hasInternetconnection(scene: self) == true{
@@ -426,6 +417,14 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }
     }
     
+    func stage1MoveCamPos(){
+        let zoom :  CGFloat = 0.5
+        let finalPos = CGPoint(x: self.frame.minX + house.frame.size.width / 1.2,
+                               y: ground.frame.maxY / 2)
+        
+        cam.moveToPos(position: finalPos, withTime: 0.5, withZoom: zoom)
+    }
+    
     func createGrandpaTouched(){
         startTouched = true
         let removeButton = SKAction.moveTo(y: self.frame.maxY + startButton.frame.size.height, duration: 0.4)
@@ -433,10 +432,11 @@ class MainMenu: SKScene, UITextFieldDelegate {
             self.startButton.removeFromParent()
             
         }
+        stage1MoveCamPos()
         soundMaker.playASound(scene: self, fileNamed: "buttonClick")
         touchManager.goWasTouched(scene: self)
-        moveCamera()
         openAndCloseHouse(waitForDuration: 0.3)
+        
         character.createButtonPressed(onScene: self, toPos: CGPoint(x: house.frame.maxX + 75, y: character.position.y),timeToMove: 1)
         let wait = SKAction.wait(forDuration: 2)
         self.run(wait, completion: {
@@ -451,7 +451,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
     
     func createCustomizeLabel(){
         self.customizeNewGrandpaLabel = SKLabelNode(fontNamed: gameFont)
-        self.customizeNewGrandpaLabel.text = "Choose Grandpas Race"
         self.customizeNewGrandpaLabel.fontColor = SKColor.black
         self.customizeNewGrandpaLabel.fontSize = 15
         self.customizeNewGrandpaLabel.zPosition = 20
@@ -474,7 +473,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     
     func moveToCreationStage(stage: Int){
         if creationStage == 1 {
-            createGrandpaStage.stage1(onScene: self, raceLabel: testlabel, racesArray: racesArray, raceCounter: raceCounterPos, character: character, ground: ground)
+            createGrandpaStage.stage1(onScene: self, raceLabel: testlabel, racesArray: racesArray, raceCounter: raceCounterPos, character: character, ground: ground, customizeLabel: customizeNewGrandpaLabel)
             
         }else if creationStage == 2{
             createGrandpaStage.stage2(onScene: self, cam: cam, character: character, customizeLabel: customizeNewGrandpaLabel)
@@ -622,6 +621,15 @@ class MainMenu: SKScene, UITextFieldDelegate {
 
     }
     
+    func playerCancelledCreation(){
+        self.childNode(withName: "dob")?.removeFromParent()
+        self.childNode(withName: "name")?.removeFromParent()
+        self.childNode(withName: "cross")?.removeFromParent()
+        self.childNode(withName: "confirmButton")?.removeFromParent()
+        self.childNode(withName: "raceLabel")?.removeFromParent()
+        creationStage = 1
+    }
+    
     func confirmButtonTouched(){
 
         //CREATIONSTAGE 4
@@ -715,6 +723,9 @@ class MainMenu: SKScene, UITextFieldDelegate {
                 
             }else if node.name == "cross" {
                 soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                stage1MoveCamPos()
+                createGrandpaStage.stage1(onScene: self, raceLabel: testlabel, racesArray: racesArray, raceCounter: raceCounterPos, character: character, ground: ground, customizeLabel: customizeNewGrandpaLabel)
+                playerCancelledCreation()
                 
                 
             }else if node.name == "createNewGranpa" {

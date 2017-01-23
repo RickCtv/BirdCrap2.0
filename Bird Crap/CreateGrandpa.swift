@@ -34,8 +34,11 @@ class CreateGrandpa {
         ]
     }
     
-    func stage1(onScene : SKScene, raceLabel : SKLabelNode, racesArray : [String], raceCounter : Int, character : Character, ground : SKSpriteNode){
+    func stage1(onScene : SKScene, raceLabel : SKLabelNode, racesArray : [String], raceCounter : Int, character : Character, ground : SKSpriteNode, customizeLabel : SKLabelNode){
         //CREATE RACE STAGE
+        customizeLabel.position = CGPoint(x: character.frame.midX,
+                                          y: character.frame.maxY + 25)
+        customizeLabel.text = "Choose Grandpas Race"
         
         //SHOW RACE GRANPAS HERE
         raceLabel.text = "\(racesArray[raceCounter])"
