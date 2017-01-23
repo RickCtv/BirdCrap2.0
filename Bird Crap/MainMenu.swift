@@ -15,7 +15,17 @@ import Firebase
 
 class MainMenu: SKScene, UITextFieldDelegate {
     
-    let usersData = UsersData()
+    private let createGrandpaStage = CreateGrandpa()
+    private var character : Character!
+    private var ground : SpriteCreator!
+    private var cam : Camera!
+    private var customizeNewGrandpaLabel : SKLabelNode!
+    private var testlabel : SKLabelNode!
+    private var raceCounterPos = 0
+    private let racesArray = ["White", "Black", "Asian", "Brown", "Latino"]
+    private var textInput : UITextField!
+    private let USERS_DATA = UserDefaults.standard
+    private let UsersKeyVals = UsersDataKeyValues()
     private var bgAudioPlayer = AVAudioPlayer()
     private let soundMaker = SoundManager()
     private let animator = AnimationEditor()
@@ -25,18 +35,11 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var startTouched = false
     private var billboard : MenuBillBoard!
     private var startButton : SpriteCreator!
-    var character : Character!
-    var ground : SpriteCreator!
     private var house : SpriteCreator!
-    private var title = SKLabelNode(fontNamed: gameFont)
+    private var title : SKLabelNode!
     private var cloudArray : [Cloud]!
     private var wifiStatus : CheckWifiStatus!
-    var cam = Camera()
     private var USER_HAS_SAVED_DATA = false
-    var customizeNewGrandpaLabel = SKLabelNode(fontNamed: gameFont)
-    let testlabel = SKLabelNode(fontNamed: gameFont)
-    var raceCounterPos = 0
-    let race = ["White", "Black", "Asian", "Brown", "Latino"]
     private var creationStage = 1
     private var dayCounter = 1
     private var monthCounter = 1
@@ -44,24 +47,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var rightArrow : ArrowClass!
     private var leftArrow : ArrowClass!
     private var confirmButton : SpriteCreator!
-    var monthCal : CalendarCreator!
-    var dayCal : CalendarCreator!
     private var maxCount = 31
-    var textInput : UITextField!
-    private let monthsChecker: [Int:String] = [
-        1 : "January",
-        2 : "February",
-        3 : "March",
-        4 : "April",
-        5 : "May",
-        6 : "June",
-        7 : "July",
-        8 : "August",
-        9 : "September",
-        10 : "October",
-        11 : "November",
-        12 : "December"
-    ]
     
     override func didMove(to view: SKView) {
         makeMainMenu()
@@ -75,7 +61,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
         createMenuButtons()
         createGround()
         createHouse()
-        createTitle()
         makeCharacter()
         wifiStatus = CheckWifiStatus(scene: self)
         checkInternetConnection()
@@ -117,6 +102,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }else{
             // Populates the SKLabelNode
             customizeNewGrandpaLabel.text = textField.text?.capitalized
+            USERS_DATA.set(textField.text?.capitalized, forKey: "nameChosen")
             
             // Hides the keyboard
             textInput.resignFirstResponder()
@@ -126,6 +112,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func makeCam(){
+        cam = Camera()
         cam.makeCam(scene: self)
         self.addChild(cam)
     }
@@ -171,10 +158,10 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func makeDayOrNight(){
+        createTitle()
         let date = Date()
         let calendar = Calendar.current
         let hour = Int(calendar.component(.hour, from: date))
-        
         //It is day time
         if hour > 7 && hour < 20 {
             isDayTime() 
@@ -277,6 +264,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func createTitle(){
+        title = SKLabelNode(fontNamed: gameFont)
         title.text = gameTitleName
         title.fontSize = 40
         title.position = CGPoint(x: self.frame.midX, y: self.frame.maxY - title.frame.height)
@@ -412,14 +400,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }
     }
     
-    func createGranpaPressed(){
-        let removeButton = SKAction.moveTo(y: self.frame.maxY + startButton.frame.size.height, duration: 0.4)
-        startButton.run(removeButton) { 
-            self.startButton.removeFromParent()
-            
-        }
-    }
-    
     func prepareForNewScene(){
         let waitForDuration = SKAction.wait(forDuration: 0.4)
         self.bgAudioPlayer.setVolume(0, fadeDuration: 2.6)
@@ -428,11 +408,11 @@ class MainMenu: SKScene, UITextFieldDelegate {
             self.removeAllChildren()
             self.removeFromParent()
             
-            let createGramps = HouseScene(size: self.size)
-            createGramps.scaleMode = .aspectFill
-            createGramps.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            let houseScene = HouseScene(size: self.size)
+            houseScene.scaleMode = .aspectFill
+            houseScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             let reveal = SKTransition.fade(withDuration: 1)
-            self.view?.presentScene(createGramps, transition: reveal)
+            self.view?.presentScene(houseScene, transition: reveal)
             
         }
     }
@@ -448,7 +428,11 @@ class MainMenu: SKScene, UITextFieldDelegate {
     
     func createGrandpaTouched(){
         startTouched = true
-        createGranpaPressed()
+        let removeButton = SKAction.moveTo(y: self.frame.maxY + startButton.frame.size.height, duration: 0.4)
+        startButton.run(removeButton) {
+            self.startButton.removeFromParent()
+            
+        }
         soundMaker.playASound(scene: self, fileNamed: "buttonClick")
         touchManager.goWasTouched(scene: self)
         moveCamera()
@@ -461,11 +445,12 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func launchCreationStages(){
-            self.arrowsCreationStagePos(stage: 1)
             self.createCustomizeLabel()
+            self.moveToCreationStage(stage: 1)
     }
     
     func createCustomizeLabel(){
+        self.customizeNewGrandpaLabel = SKLabelNode(fontNamed: gameFont)
         self.customizeNewGrandpaLabel.text = "Choose Grandpas Race"
         self.customizeNewGrandpaLabel.fontColor = SKColor.black
         self.customizeNewGrandpaLabel.fontSize = 15
@@ -486,198 +471,43 @@ class MainMenu: SKScene, UITextFieldDelegate {
         prepareForNewScene()
     }
     
-    func createArrowsAndConfirmButton(){
-        rightArrow = ArrowClass(scene: self, texture: "arrow", name: "rightArrow", scale: 0.05)
-        leftArrow = ArrowClass(scene: self, texture: "arrowLeft", name: "leftArrow", scale: 0.05)
-        confirmButton = SpriteCreator(scene: self, texture: "confirmButton", zPosition: 116, anchorPoints: nil)
-        
-    }
     
-    func arrowsCreationStagePos(stage: Int){
-        createArrowsAndConfirmButton()
-        
+    func moveToCreationStage(stage: Int){
         if creationStage == 1 {
-            //CREATE RACE STAGE
-            
-            //SHOW RACE GRANPAS HERE
-            testlabel.text = "\(race[raceCounterPos])"
-            testlabel.name = "testLabel"
-            
-            rightArrow.position = CGPoint(x: character.frame.maxX + 30,
-                                          y: character.frame.midY + 20)
-            leftArrow.position = CGPoint(x: character.frame.minX - 30,
-                                         y: rightArrow.position.y)
-            
-            
-            confirmButton.name = "confirmButton"
-            confirmButton.size = rightArrow.size
-            confirmButton.position = CGPoint(x: rightArrow.position.x, y: ground.frame.maxY + 15)
-            
-            self.addChild(rightArrow)
-            self.addChild(leftArrow)
-            self.addChild(confirmButton)
-            
+            createGrandpaStage.stage1(onScene: self, raceLabel: testlabel, racesArray: racesArray, raceCounter: raceCounterPos, character: character, ground: ground)
             
         }else if creationStage == 2{
-            //CREATE BIRTHDAY STAGE
-            //REMOVE PREVIOUS ARROW BUTTONS (would not removeFromParent for some reason
-            self.childNode(withName: "rightArrow")?.removeFromParent()
-            self.childNode(withName: "leftArrow")?.removeFromParent()
-            
-            //MOVE CAMERA TO POS
-            let pos = CGPoint(x: cam.position.x + 40, y: cam.position.y)
-            cam.moveToPos(position: pos, withTime: 0.3, withZoom: nil)
-            
-            //MAKE NEW ARROWS
-            let upArrow1 = ArrowClass(scene: self, texture: "upArrow", name: "upArrow1", scale: 0.05)
-            let downArrow1 = ArrowClass(scene: self, texture: "downArrow", name: "downArrow1", scale: 0.05)
-            let upArrow2 = ArrowClass(scene: self, texture: "upArrow", name: "upArrow2", scale: 0.05)
-            let downArrow2 = ArrowClass(scene: self, texture: "downArrow", name: "downArrow2", scale: 0.05)
-            
-        
-            //POSITION ARROWS
-            upArrow1.position = CGPoint(x: character.frame.maxX + 30,
-                                       y: character.frame.midY + upArrow1.frame.size.height * 2)
-            upArrow2.position = CGPoint(x: upArrow1.position.x + upArrow2.frame.size.width * 2,
-                                        y: upArrow1.position.y)
-            
-            downArrow1.position = CGPoint(x: upArrow1.position.x,
-                                         y: character.frame.midY - 15)
-            downArrow2.position = CGPoint(x: downArrow1.position.x + downArrow2.frame.size.width * 2,
-                                          y: downArrow1.position.y)
-            
-            //MOVE CONFIRM BUTTON
-            self.childNode(withName: "confirmButton")?.position = CGPoint(x: downArrow1.position.x + downArrow1.frame.size.width,
-                                                                          y: downArrow1.position.y - downArrow1.frame.size.height)
-            
-            //ADD NEW ARROWS
-            self.addChild(upArrow1)
-            self.addChild(downArrow1)
-            self.addChild(upArrow2)
-            self.addChild(downArrow2)
-            
-            //CHANGE THE TUTORIAL LABEL
-            self.customizeNewGrandpaLabel.text = "Choose his Birthday"
-            customizeNewGrandpaLabel.fontSize = 10
-            customizeNewGrandpaLabel.position = CGPoint(x: upArrow1.position.x + upArrow1.frame.size.width, y: customizeNewGrandpaLabel.position.y)
-            
-            //CREATE CALENDARS TO PICK DATE OF BIRTH
-            dayCal = CalendarCreator(scene: self, texture: "calendar")
-            dayCal.position = CGPoint(x: upArrow1.position.x, y: upArrow1.frame.minY - upArrow1.frame.size.height / 1.5)
-            self.addChild(dayCal)
-            dayCal.makeLabel(onScene: self, withText: "DD")
-            
-            monthCal = CalendarCreator(scene: self, texture: "calendar")
-            monthCal.position = CGPoint(x: upArrow2.position.x, y: upArrow2.frame.minY - upArrow2.frame.size.height / 1.5)
-            self.addChild(monthCal)
-            monthCal.makeLabel(onScene: self, withText: "MM")
-            
-
+            createGrandpaStage.stage2(onScene: self, cam: cam, character: character, customizeLabel: customizeNewGrandpaLabel)
         }else if creationStage == 3 {
-            //CREATE NAME OF GRANPA STAGE
-            //REMOVE ARROWS / CALS AND LABELS FROM SCENE
-            self.childNode(withName: "upArrow1")?.removeFromParent()
-            self.childNode(withName: "upArrow2")?.removeFromParent()
-            self.childNode(withName: "downArrow1")?.removeFromParent()
-            self.childNode(withName: "downArrow2")?.removeFromParent()
-            self.enumerateChildNodes(withName: "calendar", using: { (sknode, unsafe) in
-                sknode.removeFromParent()
-            })
-            self.enumerateChildNodes(withName: "calLabel", using: { (sknode, unsafe) in
-                sknode.removeFromParent()
-            })
-            
-            //MOVE CAMERA TO POS
-            let pos = CGPoint(x: cam.position.x + 60, y: cam.position.y)
-            cam.moveToPos(position: pos, withTime: 0.3, withZoom: nil)
-            
-            //CHANGE THE TUTORIAL LABEL
-            self.customizeNewGrandpaLabel.text = "Choose His Name"
-            customizeNewGrandpaLabel.fontSize = 12
-            customizeNewGrandpaLabel.position = CGPoint(x: character.frame.maxX + customizeNewGrandpaLabel.frame.size.width,
-                                                        y: customizeNewGrandpaLabel.position.y - 30)
-            
-            //MOVE CONFIRM BUTTON
-            self.childNode(withName: "confirmButton")?.position = CGPoint(x: customizeNewGrandpaLabel.position.x,
-                                                                          y: character.frame.midY - 30)
-            
-            let wait = SKAction.wait(forDuration: 0.3)
-            self.run(wait, completion: { 
-                self.textInput.isHidden = false
-            })
-            
+            createGrandpaStage.stage3(onScene: self, cam: cam, customizeLabel: customizeNewGrandpaLabel, character: character, textField: textInput)
             
         }else if creationStage == 4 {
-            //CONFIRM SELECTION STAGE
-            
-            //MOVE CAMERA TO POS
-            let pos = CGPoint(x: cam.position.x - 60, y: cam.position.y)
-            cam.moveToPos(position: pos, withTime: 0.3, withZoom: nil)
-            
-            //CHANGE THE TUTORIAL LABEL
-            self.customizeNewGrandpaLabel.text = "Is This All Correct?"
-            customizeNewGrandpaLabel.fontSize = 12
-            customizeNewGrandpaLabel.position = CGPoint(x: character.frame.maxX + 50,
-                                                        y: character.frame.maxY)
-            
-            
-            
-            //SHOW FINAL RESULTS
-            //DATE OF BIRTH LABEL
-            let dateOfBirthLabel = SKLabelNode(fontNamed: gameFont)
-            if let monthToDisplay = monthsChecker[usersData.dateOfBirthMonth] {
-                dateOfBirthLabel.text = "DOB : \(usersData.dateOfBirthDay) \(monthToDisplay)"
-            }
-            dateOfBirthLabel.fontSize = 12
-            dateOfBirthLabel.fontColor = UIColor.black
-            dateOfBirthLabel.position = CGPoint(x: customizeNewGrandpaLabel.frame.midX, y: customizeNewGrandpaLabel.frame.minY - 40)
-            dateOfBirthLabel.name = "dob"
-            self.addChild(dateOfBirthLabel)
-            
-            //NAME LABEL
-            let name = SKLabelNode(fontNamed: gameFont)
-            name.text = "Name : \(usersData.nameChosen)"
-            name.fontSize = dateOfBirthLabel.fontSize
-            name.fontColor = dateOfBirthLabel.fontColor
-            name.position = CGPoint(x: dateOfBirthLabel.position.x, y: dateOfBirthLabel.frame.minY - 20)
-            name.name = "name"
-            self.addChild(name)
-            
-            //MAKE CANCEL BUTTON
-            let crossBut = SpriteCreator(scene: self, texture: "cross", zPosition: confirmButton.zPosition, anchorPoints: nil)
-            crossBut.xScale = 0.04
-            crossBut.yScale = crossBut.xScale
-            crossBut.position = CGPoint(x: name.frame.midX - crossBut.frame.size.width,
-                                        y: name.frame.minY - 35)
-            self.addChild(crossBut)
-            
-            //MOVE CONFIRM BUTTON
-            self.childNode(withName: "confirmButton")?.position = CGPoint(x: crossBut.position.x + crossBut.frame.size.width * 2,
-                                                                          y: crossBut.position.y)
-            
+            createGrandpaStage.stage4(onScene: self, cam: cam, customizeLabel: customizeNewGrandpaLabel, character: character, raceLabel: testlabel)
         }
     }
     
     func arrowTouched(node : SKSpriteNode){
-        let count = race.count - 1
+        let count = racesArray.count - 1
         
         if node.name == "rightArrow" {
             if raceCounterPos >= count{
                 raceCounterPos = 0
-                testlabel.text = "\(race[raceCounterPos])"
+                testlabel.text = "\(racesArray[raceCounterPos])"
             }else{
                 raceCounterPos += 1
-                testlabel.text = "\(race[raceCounterPos])"
+                testlabel.text = "\(racesArray[raceCounterPos])"
             }
         }else if node.name == "leftArrow"{
             if raceCounterPos <= 0 {
                 raceCounterPos = count
+                testlabel.text = "\(racesArray[raceCounterPos])"
             }else{
                 raceCounterPos -= 1
+                testlabel.text = "\(racesArray[raceCounterPos])"
             }
         }else if node.name == "upArrow1"{
             //DAY LABEL
-            if dayCounter >= maxCount || dayCal.label.text == "DD"{
+            if dayCounter >= maxCount || createGrandpaStage.dayCal.label.text == "DD"{
                 dayCounter = 1
             }else{
                dayCounter += 1
@@ -697,7 +527,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
             
         }else if node.name == "downArrow1"{
             //DAY LABEL
-            if dayCounter <= 1 || dayCal.label.text == "DD"{
+            if dayCounter <= 1 || createGrandpaStage.dayCal.label.text == "DD"{
                 dayCounter = maxCount
             }else{
                dayCounter -= 1
@@ -744,7 +574,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }else if monthCounter == months["Feb"]
         {
             maxCount = 28
-            dayCal.label.text = "28"
+            createGrandpaStage.dayCal.label.text = "28"
             
             //IF MONTH HAS 30 DAYS
         }else if monthCounter == months["Apr"] || monthCounter == months["Jun"] || monthCounter == months["Sep"] || monthCounter == months["Nov"]
@@ -752,18 +582,18 @@ class MainMenu: SKScene, UITextFieldDelegate {
             maxCount = 30
             refreshLabel()
         }
-
     }
     
     func refreshLabel (){
         if dayCounter >= maxCount {
             dayCounter = maxCount
         }
-        dayCal.label.text = "\(dayCounter)"
-        monthCal.label.text = "\(monthCounter)"
+        createGrandpaStage.dayCal.label.text = "\(dayCounter)"
+        createGrandpaStage.monthCal.label.text = "\(monthCounter)"
     }
     func makeRaceLabel(){
-        testlabel.text = "\(race[0])"
+        testlabel = SKLabelNode(fontNamed: gameFont)
+        testlabel.text = "\(racesArray[0])"
         testlabel.fontColor = SKColor.white
         testlabel.fontSize = 15
         testlabel.zPosition = 20
@@ -778,7 +608,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         self.childNode(withName: "name")?.removeFromParent()
         self.childNode(withName: "cross")?.removeFromParent()
         self.childNode(withName: "confirmButton")?.removeFromParent()
-        self.childNode(withName: "testLabel")?.removeFromParent()
+        self.childNode(withName: "raceLabel")?.removeFromParent()
         self.customizeNewGrandpaLabel.removeFromParent()
         let toPos = CGPoint(x: self.frame.midX, y: self.frame.midY)
         openAndCloseHouse(waitForDuration: 1.6)
@@ -796,52 +626,44 @@ class MainMenu: SKScene, UITextFieldDelegate {
 
         //CREATIONSTAGE 4
         if creationStage >= 4 {
-            //creation stage is complete
             stage4HasBeenCompleted()
+            
             //CREATIONSTAGE 2 -  BIRTHDAY PICKER
         }else if creationStage == 2{
-            
-            if dayCal.label.text == "DD" || monthCal.label.text == "MM"{
+            if createGrandpaStage.dayCal.label.text == "DD" || createGrandpaStage.monthCal.label.text == "MM"{
                 print("MUST HAVE A VALID VALUE BEFORE CONTINUE")
             }else{
-                saveCreationData(value1: dayCal.label.text!, value2: monthCal.label.text!)
+                saveCreationData(value1: createGrandpaStage.dayCal.label.text!, value2: createGrandpaStage.monthCal.label.text!)
                 creationStage = creationStage + 1
-                self.arrowsCreationStagePos(stage: creationStage)
+                self.moveToCreationStage(stage: creationStage)
             }
             //CREATIONSTAGE 3 - NAME PICKER
         }else if creationStage == 3 {
             if textInput.text == "" {
-                
             }else{
-                saveCreationData(value1: (self.textInput.text?.capitalized)!, value2: nil)
                 self.textInput.isHidden = true
                 creationStage = creationStage + 1
-                self.arrowsCreationStagePos(stage: creationStage)
+                self.moveToCreationStage(stage: creationStage)
             }
-            
             //CREATIONSTAGE 1 - RACE PICKER
         }else if creationStage == 1 {
-            saveCreationData(value1: race[raceCounterPos], value2: nil)
+            saveCreationData(value1: racesArray[raceCounterPos], value2: nil)
             creationStage = creationStage + 1
-            self.arrowsCreationStagePos(stage: creationStage)
+            self.moveToCreationStage(stage: creationStage)
         }else{
             creationStage += 1
-            self.arrowsCreationStagePos(stage: creationStage)
+            self.moveToCreationStage(stage: creationStage)
         }
-        print("Creation stage : \(creationStage)")
     }
     
     func saveCreationData(value1 : String, value2 : String?){
         if creationStage == 1 {
-            usersData.racePicked = value1
+            USERS_DATA.set(value1, forKey: "racePicked")
         }else if creationStage == 2 {
-            usersData.dateOfBirthDay = Int(value1)!
-            usersData.dateOfBirthMonth = Int(value2!)!
+            USERS_DATA.set(value1, forKey: "dateOfBirthDay")
+            USERS_DATA.set(value2, forKey: "dateOfBirthMonth")
         }else if creationStage == 3 {
-            usersData.nameChosen = value1
-        }else if creationStage == 4 {
-            //SAVE TO USERS PHONE HERE
-            
+            USERS_DATA.set(value1, forKey: "nameChosen")
         }
     }
     
@@ -850,8 +672,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
         for touch in touches {
             let location = touch.location(in: self)
             let node = atPoint(location)
-            
-            print(node)
             
             //Make sure that the menu button is not multi-tapped
             if userTouched == false {
