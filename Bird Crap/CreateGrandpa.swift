@@ -11,27 +11,14 @@ import SpriteKit
 
 class CreateGrandpa {
     private var confirmButton : SpriteCreator!
-    private var monthsChecker: [Int:String]!
+    private var monthsChecker: CalendarMonths!
     var dayCal : CalendarCreator!
     var monthCal : CalendarCreator!
     private let USERS_DATA = UserDefaults.standard
     private let usersDataKeyValues = UsersDataKeyValues()
     
     init(){
-        monthsChecker = [
-            1 : "January",
-            2 : "February",
-            3 : "March",
-            4 : "April",
-            5 : "May",
-            6 : "June",
-            7 : "July",
-            8 : "August",
-            9 : "September",
-            10 : "October",
-            11 : "November",
-            12 : "December"
-        ]
+        monthsChecker = CalendarMonths()
     }
     
     func stage1(onScene : SKScene, raceLabel : SKLabelNode, racesArray : [String], raceCounter : Int, character : Character, ground : SKSpriteNode, customizeLabel : SKLabelNode){
@@ -169,9 +156,9 @@ class CreateGrandpa {
         //SHOW FINAL RESULTS
         //DATE OF BIRTH LABEL
         let dateOfBirthLabel = SKLabelNode(fontNamed: gameFont)
-        if let monthToDisplay = monthsChecker[USERS_DATA.integer(forKey: usersDataKeyValues.dateOfBirthMonth)] {
-            dateOfBirthLabel.text = "DOB : \(USERS_DATA.integer(forKey: usersDataKeyValues.dateOfBirthDay)) \(monthToDisplay)"
-        }
+        let dayToDisplay = USERS_DATA.integer(forKey: usersDataKeyValues.dateOfBirthDay)
+        let checkMonth : String? = USERS_DATA.string(forKey: usersDataKeyValues.dateOfBirthMonth)
+        dateOfBirthLabel.text = "DOB : \(dayToDisplay) \(checkMonth!)"
         dateOfBirthLabel.fontSize = 12
         dateOfBirthLabel.fontColor = UIColor.black
         dateOfBirthLabel.position = CGPoint(x: customizeLabel.frame.midX, y: customizeLabel.frame.minY - 40)

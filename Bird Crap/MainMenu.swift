@@ -48,6 +48,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var leftArrow : ArrowClass!
     private var confirmButton : SpriteCreator!
     private var maxCount = 31
+    private let calendarMonths = CalendarMonths()
     
     override func didMove(to view: SKView) {
         makeMainMenu()
@@ -547,36 +548,22 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func monthTester(){
-        let months: [String:Int] = [
-            "Jan" : 1, // HAS 31 D
-            "Feb" : 2, // HAS 28 D
-            "Mar" : 3, // HAS 31 D
-            "Apr" : 4, // HAS 30 D
-            "May" : 5, // HAS 31 D
-            "Jun" : 6, // HAS 30 D
-            "Jul" : 7, // HAS 31 D
-            "Aug" : 8, // HAS 31 D
-            "Sep" : 9, // HAS 30 D
-            "Oct" : 10, // HAS 31 D
-            "Nov" : 11, // HAS 30 D
-            "Dec" : 12 // HAS 31 D
-        ]
         
         //IF MONTH HAS 31 DAYS
-        if monthCounter == months["Jan"] || monthCounter == months["Mar"] || monthCounter == months["May"] || monthCounter == months["Jul"]
-            || monthCounter == months["Aug"] || monthCounter == months["Oct"] || monthCounter == months["Dec"]
+        if monthCounter == calendarMonths.monthsStringToInt["Jan"] || monthCounter == calendarMonths.monthsStringToInt["Mar"] || monthCounter == calendarMonths.monthsStringToInt["May"] || monthCounter == calendarMonths.monthsStringToInt["Jul"]
+            || monthCounter == calendarMonths.monthsStringToInt["Aug"] || monthCounter == calendarMonths.monthsStringToInt["Oct"] || monthCounter == calendarMonths.monthsStringToInt["Dec"]
         {
             maxCount = 31
             refreshLabel()
             
             //IF MONTH IS IN FEB
-        }else if monthCounter == months["Feb"]
+        }else if monthCounter == calendarMonths.monthsStringToInt["Feb"]
         {
             maxCount = 28
             createGrandpaStage.dayCal.label.text = "28"
             
             //IF MONTH HAS 30 DAYS
-        }else if monthCounter == months["Apr"] || monthCounter == months["Jun"] || monthCounter == months["Sep"] || monthCounter == months["Nov"]
+        }else if monthCounter == calendarMonths.monthsStringToInt["Apr"] || monthCounter == calendarMonths.monthsStringToInt["Jun"] || monthCounter == calendarMonths.monthsStringToInt["Sep"] || monthCounter == calendarMonths.monthsStringToInt["Nov"]
         {
             maxCount = 30
             refreshLabel()
@@ -588,7 +575,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
             dayCounter = maxCount
         }
         createGrandpaStage.dayCal.label.text = "\(dayCounter)"
-        createGrandpaStage.monthCal.label.text = "\(monthCounter)"
+        createGrandpaStage.monthCal.label.text = calendarMonths.months[monthCounter]
     }
     func makeRaceLabel(){
         testlabel = SKLabelNode(fontNamed: gameFont)
