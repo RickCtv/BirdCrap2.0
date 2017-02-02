@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1661240A41073E732A4C804C /* Pods_Bird_Crap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */; };
+		7328B1901E4268A6007D82AE /* DebugingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7328B18F1E4268A6007D82AE /* DebugingMode.swift */; };
 		734726031E00732200B0E892 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726021E00732200B0E892 /* Cloud.swift */; };
 		7347260A1E0085B600B0E892 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726091E0085B600B0E892 /* Character.swift */; };
 		7347260C1E00892900B0E892 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7347260B1E00892900B0E892 /* SoundManager.swift */; };
@@ -20,7 +21,7 @@
 		734D9E3E1E2EE66300046D87 /* CheckWifiStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734D9E3D1E2EE66300046D87 /* CheckWifiStatus.swift */; };
 		7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7361E2B41E01C6E100705A80 /* MenuBillboard.swift */; };
 		736AF54B1E369B7D002C9AC0 /* CalendarMonths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736AF54A1E369B7D002C9AC0 /* CalendarMonths.swift */; };
-		739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */; };
+		739B7FEB1DFD90D500A022E7 /*  AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FEA1DFD90D500A022E7 /*  AppDelegate.swift */; };
 		739B7FED1DFD90D500A022E7 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 739B7FEC1DFD90D500A022E7 /* GameScene.sks */; };
 		739B7FF11DFD90D500A022E7 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FF01DFD90D500A022E7 /* MainMenu.swift */; };
 		739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739B7FF21DFD90D500A022E7 /* GameViewController.swift */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		194FAC302ADA416F816299FB /* Pods_Bird_CrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_CrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7328B18F1E4268A6007D82AE /* DebugingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugingMode.swift; sourceTree = "<group>"; };
 		734726021E00732200B0E892 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		734726091E0085B600B0E892 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		7347260B1E00892900B0E892 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
@@ -79,7 +81,7 @@
 		7361E2B41E01C6E100705A80 /* MenuBillboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBillboard.swift; sourceTree = "<group>"; };
 		736AF54A1E369B7D002C9AC0 /* CalendarMonths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarMonths.swift; sourceTree = "<group>"; };
 		739B7FE71DFD90D500A022E7 /* Bird Crap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bird Crap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		739B7FEA1DFD90D500A022E7 /*  AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AppDelegate.swift"; sourceTree = "<group>"; };
 		739B7FEC1DFD90D500A022E7 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		739B7FF01DFD90D500A022E7 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		739B7FF21DFD90D500A022E7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -163,7 +165,7 @@
 		734725FC1E006DFC00B0E892 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				739B7FEA1DFD90D500A022E7 /* AppDelegate.swift */,
+				739B7FEA1DFD90D500A022E7 /*  AppDelegate.swift */,
 			);
 			name = AppDelegate;
 			sourceTree = "<group>";
@@ -220,6 +222,7 @@
 		734726041E00739C00B0E892 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				734726131E00B76300B0E892 /* GameManager.swift */,
 				73F09EAB1E357560009E2B35 /* CreateGrandpa.swift */,
 				73D36CDA1E33B908003B2DB2 /* CalendarCreator.swift */,
 				73D36CD41E32C320003B2DB2 /* Camera.swift */,
@@ -232,7 +235,6 @@
 				7347260D1E00970C00B0E892 /* Sun.swift */,
 				734726111E00A8E200B0E892 /* MenuButton.swift */,
 				73C5DAC81E0861DC00979815 /* TouchManager.swift */,
-				734726131E00B76300B0E892 /* GameManager.swift */,
 				736AF54A1E369B7D002C9AC0 /* CalendarMonths.swift */,
 				7361E2B41E01C6E100705A80 /* MenuBillboard.swift */,
 				734726151E00C7D400B0E892 /* CreditsPage.swift */,
@@ -240,6 +242,7 @@
 				734726191E00D2A400B0E892 /* AnimationEditor.swift */,
 				73F5745B1E2D409F00385D25 /* UserDataFirebase.swift */,
 				73D36CDC1E351283003B2DB2 /* UsersDataKeyValues.swift */,
+				7328B18F1E4268A6007D82AE /* DebugingMode.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -513,7 +516,8 @@
 				73F09EAC1E357560009E2B35 /* CreateGrandpa.swift in Sources */,
 				7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */,
 				734D9E3E1E2EE66300046D87 /* CheckWifiStatus.swift in Sources */,
-				739B7FEB1DFD90D500A022E7 /* AppDelegate.swift in Sources */,
+				7328B1901E4268A6007D82AE /* DebugingMode.swift in Sources */,
+				739B7FEB1DFD90D500A022E7 /*  AppDelegate.swift in Sources */,
 				734726161E00C7D400B0E892 /* CreditsPage.swift in Sources */,
 				734726141E00B76300B0E892 /* GameManager.swift in Sources */,
 				734726181E00CDBB00B0E892 /* SpriteCreator.swift in Sources */,

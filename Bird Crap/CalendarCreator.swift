@@ -35,6 +35,5 @@ class CalendarCreator : SKSpriteNode{
         label.position.x = self.frame.midX
         label.position.y = self.frame.midY - 10
         onScene.addChild(label)
-        print(label.position)
     }
 }

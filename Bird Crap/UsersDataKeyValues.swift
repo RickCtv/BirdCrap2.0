@@ -13,5 +13,6 @@ struct UsersDataKeyValues {
     let dateOfBirthDay = "dateOfBirthDay"
     let dateOfBirthMonth = "dateOfBirthMonth"
     let racePicked = "racePicked"
+    let completedTutorial = "completedTutorial"
     
 }

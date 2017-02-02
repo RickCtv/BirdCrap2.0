@@ -5,6 +5,8 @@
 //
 //  Created by Rick Crane on 11/12/2016.
 //  Copyright © 2016 Rick Crane. All rights reserved.
+//sprite.color = .blackColor()
+//sprite.colorBlendFactor = 1.0
 //
 
 import SpriteKit
@@ -39,7 +41,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var title : SKLabelNode!
     private var cloudArray : [Cloud]!
     private var wifiStatus : CheckWifiStatus!
-    private var USER_HAS_SAVED_DATA = false
     private var creationStage = 1
     private var dayCounter = 1
     private var monthCounter = 1
@@ -49,25 +50,42 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var confirmButton : SpriteCreator!
     private var maxCount = 31
     private let calendarMonths = CalendarMonths()
+    private var itIsDayTime = true
+    private var wifiSingalIsDisplaying = false
+    private let debugMode = DebugingMode()
     
     override func didMove(to view: SKView) {
+        checkIfUserCompletedTutorial()
         makeMainMenu()
     }
     
     func makeMainMenu(){
         cloudArray = []
-        createBGMusic()
-        makeDayOrNight()
-        createStartButton()
+        makeUserInterface()
         createMenuButtons()
-        createGround()
-        createHouse()
-        makeCharacter()
-        wifiStatus = CheckWifiStatus(scene: self)
+        makeDayOrNight()
+        wifiStatus = CheckWifiStatus(onScene: self)
         checkInternetConnection()
         makeCam()
         makeTextField()
         
+    }
+    func makeUserInterface(){
+        createBGMusic()
+        createGround()
+        createHouse()
+        makeCharacter()
+        createStartButton()
+        debugMode.makeDebug(onScene: self)
+    }
+    
+    func checkIfUserCompletedTutorial() {
+        if USERS_DATA.bool(forKey: UsersKeyVals.completedTutorial) == true {
+            USER_HAS_SAVED_DATA = true
+        }else if USERS_DATA.bool(forKey: UsersKeyVals.completedTutorial) == false {
+            USER_HAS_SAVED_DATA = false
+            removeAllUserData()
+        }
     }
     
     func makeTextField(){
@@ -85,6 +103,19 @@ class MainMenu: SKScene, UITextFieldDelegate {
         self.view?.addSubview(textInput)
         textInput.isHidden = true
         
+    }
+    
+    func removeAllUserData(){
+        USERS_DATA.removeObject(forKey: UsersKeyVals.nameChosen)
+        USERS_DATA.synchronize()
+        USERS_DATA.removeObject(forKey: UsersKeyVals.dateOfBirthDay)
+        USERS_DATA.synchronize()
+        USERS_DATA.removeObject(forKey: UsersKeyVals.dateOfBirthMonth)
+        USERS_DATA.synchronize()
+        USERS_DATA.removeObject(forKey: UsersKeyVals.racePicked)
+        USERS_DATA.synchronize()
+        USERS_DATA.removeObject(forKey: UsersKeyVals.completedTutorial)
+        USERS_DATA.synchronize()
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -119,15 +150,51 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func checkInternetConnection(){
-        _ = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (timerthing) in
-            if self.wifiStatus.hasInternetconnection(scene: self) == true{
-                //HAS INTERNET
-                self.wifiStatus.wifiImage.alpha = 0
-            }else{
-                //HAS NOT INTERNET
-                self.wifiStatus.wifiImage.alpha = 1
+            _ = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (timerthing) in
+                
+                if debugModeSwitchedOn == true {
+                    //HAS INTERNET DEBUG MODE
+                    if wifiIsOn == true {
+                        self.wifiStatus.debugModeIsOn()
+                        self.wifiSingalIsDisplaying = false
+                        self.wifiStatus.wifiImage.alpha = 0
+                        
+                    }else if wifiIsOn == false {
+                        //HAS NOT INTERNET DEBUG MODE
+                        self.lostConnection()
+                    }
+                }else{
+                if self.wifiStatus.hasInternetconnection(scene: self) == true{
+                    //HAS INTERNET
+                    self.wifiSingalIsDisplaying = false
+                    self.wifiStatus.wifiImage.alpha = 0
+                
+                }else{
+                    self.lostConnection()
+                }
             }
         }
+    }
+    
+    func lostConnection(){
+        //HAS NOT INTERNET
+        self.wifiStatus.wifiImage.alpha = 1
+        self.wifiSingalIsDisplaying = true
+        var counter = 0
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+            counter += 1
+            if debugModeSwitchedOn == true && wifiIsOn == true {
+                timer.invalidate()
+            }else if debugModeSwitchedOn == false && self.wifiStatus.hasInternetconnection(scene: self) == true{
+                timer.invalidate()
+            }else{
+                if counter >= 20 {
+                    self.prepareForNewScene(whichScene: "LoadingScene")
+                    timer.invalidate()
+                }
+            }
+            
+        })
     }
     
     func makeCharacter(){
@@ -155,11 +222,13 @@ class MainMenu: SKScene, UITextFieldDelegate {
         let calendar = Calendar.current
         let hour = Int(calendar.component(.hour, from: date))
         //It is day time
-        if hour > 7 && hour < 20 {
+        if hour > timeSunRise && hour < timeSunSet {
+            itIsDayTime = true
             isDayTime() 
             
             //It is night time
         }else{
+            itIsDayTime = false
             isNightTime()
         }
     }
@@ -178,6 +247,17 @@ class MainMenu: SKScene, UITextFieldDelegate {
     func isNightTime(){
         title.fontColor = SKColor.white
         self.backgroundColor = nightTimeColorBG
+        
+        house.color = nightColor
+        house.colorBlendFactor = nightBlendValue
+        
+        ground.color = nightColor
+        ground.colorBlendFactor = nightBlendValue
+        
+        startButton.color = nightColor
+        startButton.colorBlendFactor = nightBlendValue
+        
+        
         let moon = SpriteCreator(scene: self, texture: "moon", zPosition: 3, anchorPoints: nil)
         moon.xScale = 0.3
         moon.yScale = moon.xScale
@@ -245,6 +325,20 @@ class MainMenu: SKScene, UITextFieldDelegate {
         
         let creditsFence = MenuButton(scene: self, imageName: "CreditsFence", moveDownFromSprite: statsButton)
         self.addChild(creditsFence)
+        
+        if itIsDayTime == true {
+            settingsButton.color = nightColor
+            settingsButton.colorBlendFactor = nightBlendValue
+            
+            shopButton.color = nightColor
+            shopButton.colorBlendFactor = nightBlendValue
+            
+            statsButton.color = nightColor
+            statsButton.colorBlendFactor = nightBlendValue
+            
+            creditsFence.color = nightColor
+            creditsFence.colorBlendFactor = nightBlendValue
+        }
         
     }
     
@@ -392,7 +486,16 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }
     }
     
-    func prepareForNewScene(){
+    func prepareForNewScene(whichScene : String){
+        var sceneToPresent : SKScene!
+        
+        if whichScene == "LoadingScene" {
+            sceneToPresent = LoadingScreen(size: self.size)
+        }else if whichScene == "HouseScene" {
+            sceneToPresent = HouseScene(size: self.size)
+        }
+        
+        
         let waitForDuration = SKAction.wait(forDuration: 0.4)
         self.bgAudioPlayer.setVolume(0, fadeDuration: 2.6)
         self.run(waitForDuration) {
@@ -400,11 +503,10 @@ class MainMenu: SKScene, UITextFieldDelegate {
             self.removeAllChildren()
             self.removeFromParent()
             
-            let houseScene = HouseScene(size: self.size)
-            houseScene.scaleMode = .aspectFill
-            houseScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            sceneToPresent.scaleMode = .aspectFill
+            sceneToPresent.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             let reveal = SKTransition.fade(withDuration: 1)
-            self.view?.presentScene(houseScene, transition: reveal)
+            self.view?.presentScene(sceneToPresent, transition: reveal)
             
         }
     }
@@ -468,7 +570,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         character.continueButtonPressed(onScene: self)
         openAndCloseHouse(waitForDuration: 1.8)
         touchManager.goWasTouched(scene: self)
-        prepareForNewScene()
+        prepareForNewScene(whichScene: "HouseScene")
     }
     
     
@@ -603,7 +705,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         
         let wait = SKAction.wait(forDuration: 2.5)
         self.run(wait, completion: {
-            self.prepareForNewScene()
+            self.prepareForNewScene(whichScene: "HouseScene")
         })
 
     }
@@ -621,6 +723,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
 
         //CREATIONSTAGE 4
         if creationStage >= 4 {
+            USERS_DATA.set(true, forKey: UsersKeyVals.completedTutorial)
             stage4HasBeenCompleted()
             
             //CREATIONSTAGE 2 -  BIRTHDAY PICKER
@@ -650,7 +753,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
             self.moveToCreationStage(stage: creationStage)
         }
     }
-    
+        
     func saveCreationData(value1 : String, value2 : String?){
         if creationStage == 1 {
             USERS_DATA.set(value1, forKey: "racePicked")
@@ -662,11 +765,30 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }
     }
     
+    func noWifiMessage(){
+        let warning = SKLabelNode(fontNamed: gameFont)
+        warning.text = "Low Internet Connection"
+        warning.position = CGPoint(x: cam.frame.midX - 45, y: ground.frame.maxY - 25)
+        warning.fontSize = 15
+        warning.zPosition = 700
+        
+        self.addChild(warning)
+        let warningAction = SKAction.wait(forDuration: 2)
+        warning.run(warningAction, completion: {
+            warning.removeFromParent()
+        })
+
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     
         for touch in touches {
             let location = touch.location(in: self)
             let node = atPoint(location)
+            
+            if debugModeDisplaying == true {
+                debugMode.runDebugAction(node: node, onScene: self)
+            }
             
             //Make sure that the menu button is not multi-tapped
             if userTouched == false {
@@ -693,6 +815,12 @@ class MainMenu: SKScene, UITextFieldDelegate {
             }else if node.name == "soundButton" {
                 soundSwitch(node: node, soundOrMusic: "sound")
                 
+            }else if node.name == "debugMode" {
+                soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+                debugMode.showDebugMenu(onScene: self)
+                debugModeDisplaying = true
+                debugMode.runDebugAction(node: node, onScene: self)
+                
             }else if node.name == "NotificationsButton" {
                 notificationSwitcher(node: node)
             }else if node.name == "leftArrow"
@@ -706,7 +834,12 @@ class MainMenu: SKScene, UITextFieldDelegate {
                 
             }else if node.name == "confirmButton" {
                 soundMaker.playASound(scene: self, fileNamed: "buttonClick")
-                confirmButtonTouched()
+                if wifiSingalIsDisplaying == false {
+                    confirmButtonTouched()
+                }else {
+                    noWifiMessage()
+                }
+                
                 
             }else if node.name == "cross" {
                 soundMaker.playASound(scene: self, fileNamed: "buttonClick")
@@ -723,7 +856,11 @@ class MainMenu: SKScene, UITextFieldDelegate {
             }else if node.name == "continueGame" {
                 //Checking to see if it is touched already
                 if startTouched == false{
-                    continueButtonTouched()
+                    if wifiSingalIsDisplaying == false{
+                       continueButtonTouched()
+                    }else{
+                        noWifiMessage()
+                    }
                 }
             }else {
                 userTouched = false
@@ -733,5 +870,11 @@ class MainMenu: SKScene, UITextFieldDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         manageClouds()
+        if shouldResetNow == true {
+            shouldResetNow = false
+            prepareForNewScene(whichScene: "LoadingScene")
+        }
+        
+        print(displayingMenuBoard)
     }
 }

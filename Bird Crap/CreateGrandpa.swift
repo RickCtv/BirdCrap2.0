@@ -16,9 +16,21 @@ class CreateGrandpa {
     var monthCal : CalendarCreator!
     private let USERS_DATA = UserDefaults.standard
     private let usersDataKeyValues = UsersDataKeyValues()
+    private var isDayTime = true
     
     init(){
         monthsChecker = CalendarMonths()
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = Int(calendar.component(.hour, from: date))
+        //It is day time
+        if hour > timeSunRise && hour < timeSunSet {
+            isDayTime = true
+            
+            //It is night time
+        }else{
+            isDayTime = false
+        }
     }
     
     func stage1(onScene : SKScene, raceLabel : SKLabelNode, racesArray : [String], raceCounter : Int, character : Character, ground : SKSpriteNode, customizeLabel : SKLabelNode){
@@ -26,6 +38,10 @@ class CreateGrandpa {
         customizeLabel.position = CGPoint(x: character.frame.midX,
                                           y: character.frame.maxY + 25)
         customizeLabel.text = "Choose Grandpas Race"
+        
+        if isDayTime == false {
+            customizeLabel.fontColor = SKColor.white
+        }
         
         //SHOW RACE GRANPAS HERE
         raceLabel.text = "\(racesArray[raceCounter])"
@@ -172,6 +188,12 @@ class CreateGrandpa {
         name.fontColor = dateOfBirthLabel.fontColor
         name.position = CGPoint(x: dateOfBirthLabel.position.x, y: dateOfBirthLabel.frame.minY - 20)
         onScene.addChild(name)
+        
+        if isDayTime == false {
+            let white = SKColor.white
+            dateOfBirthLabel.fontColor = white
+            name.fontColor = white
+        }
         
         //MAKE CANCEL BUTTON
         let crossBut = SpriteCreator(scene: onScene, texture: "cross", zPosition: confirmButton.zPosition, anchorPoints: nil)

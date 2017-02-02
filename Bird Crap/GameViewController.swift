@@ -17,30 +17,34 @@ enum UIUserInterfaceIdiom : Int {
 }
 
 class GameViewController: UIViewController {
+    private var loaded = false
     
     override func viewWillLayoutSubviews() {
         
-        if let view = self.view as! SKView? {
+        if loaded == false {
+        
+            if let view = self.view as! SKView? {
             
-            switch UIDevice.current.userInterfaceIdiom {
-            case .phone:
+                let scene : LoadingScreen!
+                switch UIDevice.current.userInterfaceIdiom {
+                case .phone:
                 
                 // Load the SKScene from 'GameScene.sks'
                 //NEED TO CHANGE THIS TO LOADING SCREEN WHEN READY
-                let scene = MainMenu(size: CGSize(width: 1024, height: 768))
+                    scene = LoadingScreen(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
                     scene.scaleMode = .aspectFit 
                     scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                
+                    
                     // Present the scene
                     view.presentScene(scene)
                     print("This is an iPhone / iPod")
 
-                break
-            case .pad:
+                    break
+                case .pad:
                 // Load the SKScene from 'GameScene.sks'
-                let scene = MainMenu(size: CGSize(width: 1024, height: 768))
+                    scene = LoadingScreen(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
                     scene.scaleMode = .fill
@@ -49,25 +53,33 @@ class GameViewController: UIViewController {
                     // Present the scene
                     view.presentScene(scene)
                     print("This is an iPad")
-                break
-            case .unspecified:
+                    break
+                case .unspecified:
                 // Uh, oh! What could it be?
-                print("This is an unKnown Device")
-                break
-            default:
-                print("This is an unKnown Device")
-                break
-            }
+                    print("This is an unKnown Device")
+                    break
+                default:
+                    print("This is an unKnown Device")
+                    break
+                }
             
-            view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
-            //view.showsPhysics = true
+                view.ignoresSiblingOrder = true
+                view.showsFPS = true
+                view.showsNodeCount = true
+                //view.showsPhysics = true
+                loaded = true
+            }else {
+                
+            }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         
     }
 

@@ -5,14 +5,11 @@
 //  Created by Rick Crane on 14/01/2017.
 //  Copyright © 2017 Rick Crane. All rights reserved.
 //
-
-import Foundation
 import GameplayKit
 import AVFoundation
 
 class LoadingScreen: SKScene {
     
-    var mainMenu : MainMenu! = nil
     var loadingText : SKLabelNode! = nil
     var connectionTimeOut = false
     var warning : SpriteCreator! = nil
@@ -26,27 +23,31 @@ class LoadingScreen: SKScene {
     }
     
     func checkForInternetConnection(){
-        
         let waitForSec = SKAction.wait(forDuration: 3)
-        mainMenu = MainMenu(size: self.size)
-        mainMenu.scaleMode = .aspectFit
-        mainMenu.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        let reveal = SKTransition.fade(withDuration: 1)
         
         self.run(waitForSec) {
             if self.currentReachabilityStatus != .notReachable {
-                self.view?.presentScene(self.mainMenu, transition: reveal)
-                
-                self.removeAllActions()
-                self.removeAllChildren()
-                self.removeFromParent()
-                
+                self.prepareForNewScene()
             }else{
                 //They have no internet connection
                 self.connectionTimeOut = true
                 self.makeConnectionBillBoard()
             }
         }
+    }
+        
+    func prepareForNewScene(){
+        var sceneToPresent : SKScene!
+            sceneToPresent = MainMenu(size: self.size)
+
+        self.removeAllActions()
+        self.removeAllChildren()
+        self.removeFromParent()
+        
+            sceneToPresent.scaleMode = .aspectFill
+            sceneToPresent.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            let reveal = SKTransition.fade(withDuration: 1)
+            self.view?.presentScene(sceneToPresent, transition: reveal)
     }
     
     func makeLoadingScreen(){
@@ -124,7 +125,7 @@ class LoadingScreen: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             let node = atPoint(location)
-        
+            
             if node.name == "retry"{
                 warning.removeFromParent()
                 connectionTimeOut = false
@@ -132,9 +133,6 @@ class LoadingScreen: SKScene {
             }
         }
     }
-    
     override func update(_ currentTime: TimeInterval) {
-        
     }
-    
 }

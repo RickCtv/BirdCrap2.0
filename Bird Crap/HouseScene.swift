@@ -6,24 +6,57 @@
 //  Copyright © 2017 Rick Crane. All rights reserved.
 //
 
-import Foundation
 import GameplayKit
 import AVFoundation
 
 class HouseScene: SKScene {
-
-
+    
+    
     override func didMove(to view: SKView) {
-       let label = SKLabelNode(text: "IT'S A NEW SCENE!")
-        let label2 = SKLabelNode(text: "This is where we will make the house")
-        label2.position.y = label.position.y - 60
+        let label = SKLabelNode(text: "We are in the house")
         self.addChild(label)
-        self.addChild(label2)
         
     }
     
+    func makeGestureControllers(){
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(HouseScene.handleSwipes))
+        swipeRight.direction = .right
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(HouseScene.handleSwipes))
+        swipeRight.direction = .left
+        
+        self.view?.addGestureRecognizer(swipeRight)
+        self.view?.addGestureRecognizer(swipeLeft)
+    }
+    
+    func handleSwipes(sender : UISwipeGestureRecognizer){
+        
+        switch sender.direction {
+        case UISwipeGestureRecognizerDirection.right:
+            //WE SHOULD GO LEFT
+            print("Swiped Right")
+            
+            break
+        case UISwipeGestureRecognizerDirection.left:
+            //WE SHOULD GO RIGHT
+            print("Swiped Left")
+           
+            break
+        default:
+            print("No Valid Swipe Detected")
+        }
+    }
+    
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+//        for touch in touches {
+//            //let location = touch.location(in: self)
+//            //let node = atPoint(location)
+//        
+//        }
+        
+        
+    }
     override func update(_ currentTime: TimeInterval) {
-        
     }
-    
 }

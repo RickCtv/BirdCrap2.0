@@ -12,17 +12,19 @@ import SpriteKit
 class CheckWifiStatus{
     var wifiImage : SKSpriteNode!
     
-    init(scene : SKScene){
+    init(onScene: SKScene){
         
         wifiImage = SKSpriteNode(imageNamed: "lowWifiImage")
         wifiImage.alpha = 0
-        wifiImage.zPosition = 20
-        positionSprite(scene: scene)
-        scene.addChild(wifiImage)
-        
+        positionSprite(scene: onScene)
+        onScene.addChild(wifiImage)
     }
     
     func hasInternetconnection(scene : SKScene) -> Bool{
+        wifiImage.alpha = 0
+        wifiImage.zPosition = 20
+        positionSprite(scene: scene)
+        
         if scene.currentReachabilityStatus != .notReachable{
             //They HAVE internet connection
             print("User Internet Connection Stable")
@@ -33,6 +35,21 @@ class CheckWifiStatus{
             print("User Has Lost Internet Connection")
             makeActions()
             return false
+        }
+    }
+    
+    func debugModeIsOn(){
+        wifiImage.alpha = 0
+        wifiImage.zPosition = 20
+        
+        if wifiIsOn == true {
+            //They HAVE internet connection
+            print("User Internet Connection Stable - DEBUG MODE")
+            self.wifiImage.removeAllActions()
+        }else if wifiIsOn == false{
+            //They DO NOT have internet connection
+            print("User Has Lost Internet Connection - DEBUG MODE")
+            makeActions()
         }
     }
     
