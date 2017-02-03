@@ -11,6 +11,7 @@ import SpriteKit
 
 class Character: SKSpriteNode {
     private var goPressed = false
+    private let soundMaker = SoundManager()
     
     init(scene : SKScene, texture : String) {
         let texture = SKTexture(imageNamed: texture)
@@ -20,11 +21,30 @@ class Character: SKSpriteNode {
         self.yScale = self.xScale
         self.anchorPoint = CGPoint(x: 0.5, y: 0)
         self.zPosition = 8
+        self.name = "grandpa"
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func makeAngryGrandpa(scene : SKScene){
+        soundMaker.playAngryVoice(scene: scene)
+        makeGranpaShake()
+    }
+    
+    func makeGranpaPain(scene : SKScene){
+        soundMaker.playPainVoice(scene: scene)
+        makeGranpaShake()
+    }
+    
+    func makeGranpaShake(){
+        let grandadGoLeft = SKAction.moveBy(x: -2, y: 0, duration: 0.03)
+        let grandadGoRight = SKAction.moveBy(x: 2, y: 0, duration: 0.03)
+        let seq = SKAction.sequence([grandadGoLeft, grandadGoRight, grandadGoRight, grandadGoLeft])
+        self.run(seq)
+    }
+    
     
     func continueButtonPressed(onScene : SKScene){
         

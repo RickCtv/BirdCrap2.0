@@ -134,26 +134,53 @@ class DebugingMode: SKSpriteNode {
     
     func resetAllUserData(){
         USERS_DATA.removeObject(forKey: userKeyVals.nameChosen)
-        USERS_DATA.synchronize()
         USERS_DATA.removeObject(forKey: userKeyVals.dateOfBirthDay)
-        USERS_DATA.synchronize()
         USERS_DATA.removeObject(forKey: userKeyVals.dateOfBirthMonth)
-        USERS_DATA.synchronize()
         USERS_DATA.removeObject(forKey: userKeyVals.racePicked)
-        USERS_DATA.synchronize()
         USERS_DATA.removeObject(forKey: userKeyVals.completedTutorial)
-        USERS_DATA.synchronize()
         print("RESET COMPLETE")
         
     }
     
     func showUserSavedData(){
         
+        var nameLabel = SKLabelNode()
+        var dateOfBirth = SKLabelNode()
+        var racePicked = SKLabelNode()
+        var completedTut = SKLabelNode()
+        
         let board = SKSpriteNode(color: UIColor.blue, size: CGSize(width: 400, height: 300))
-        let nameLabel = SKLabelNode(text: "NAME CHOSEN -> \(USERS_DATA.string(forKey: userKeyVals.nameChosen))")
-        let dateOfBirth = SKLabelNode(text: "DAY ->\(USERS_DATA.string(forKey: userKeyVals.dateOfBirthDay)) Month -> \(USERS_DATA.string(forKey: userKeyVals.dateOfBirthMonth))")
-        let racePicked = SKLabelNode(text: USERS_DATA.string(forKey: userKeyVals.racePicked))
-        let completedTut = SKLabelNode(text: "Completed Tutorial -> \(USERS_DATA.string(forKey: userKeyVals.completedTutorial))")
+        board.zPosition = 99999
+        
+        let checkName : String? = USERS_DATA.string(forKey: userKeyVals.nameChosen)
+        if checkName != nil {
+            nameLabel = SKLabelNode(text: "Name Chosen ->  \(checkName!)")
+        }else{
+            
+        }
+        
+        
+        let checkDay : String? = USERS_DATA.string(forKey: userKeyVals.dateOfBirthDay)
+        let checkMonth : String? = USERS_DATA.string(forKey: userKeyVals.dateOfBirthMonth)
+        if checkDay != nil || checkMonth != nil{
+            dateOfBirth = SKLabelNode(text: "DOB ->  \(checkDay!) / \(checkMonth!)")
+        }
+        
+        
+        
+        let checkRace : String? = USERS_DATA.string(forKey: userKeyVals.racePicked)
+        if checkRace != nil {
+            racePicked = SKLabelNode(text: "Race:  \(checkRace!)")
+        }
+        
+        let checkTut : String? = USERS_DATA.string(forKey: userKeyVals.completedTutorial)
+        if checkTut != nil {
+            completedTut = SKLabelNode(text: "Completed Tutorial ->  \(checkTut!)")
+        } else {
+            let noDataLabel = SKLabelNode(text: "No Data To Display")
+            noDataLabel.position = CGPoint(x: board.frame.midX, y: board.frame.midY)
+            board.addChild(noDataLabel)
+        }
         
         nameLabel.fontSize = 25
         dateOfBirth.fontSize = nameLabel.fontSize

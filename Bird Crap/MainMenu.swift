@@ -45,18 +45,21 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var dayCounter = 1
     private var monthCounter = 1
     private var firstCamPos : CGPoint!
-    private var rightArrow : ArrowClass!
-    private var leftArrow : ArrowClass!
+    //private var rightArrow : ArrowClass!
+    //private var leftArrow : ArrowClass!
     private var confirmButton : SpriteCreator!
     private var maxCount = 31
     private let calendarMonths = CalendarMonths()
     private var itIsDayTime = true
     private var wifiSingalIsDisplaying = false
     private let debugMode = DebugingMode()
+    private var sleepTimer = Timer()
+    private var hour = Int()
     
     override func didMove(to view: SKView) {
         checkIfUserCompletedTutorial()
         makeMainMenu()
+        makeCharacter()
     }
     
     func makeMainMenu(){
@@ -74,7 +77,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
         createBGMusic()
         createGround()
         createHouse()
-        makeCharacter()
         createStartButton()
         debugMode.makeDebug(onScene: self)
     }
@@ -130,7 +132,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField.text == ""{
-        
+            
         }else{
             // Populates the SKLabelNode
             customizeNewGrandpaLabel.text = textField.text?.capitalized
@@ -200,27 +202,36 @@ class MainMenu: SKScene, UITextFieldDelegate {
     func makeCharacter(){
         //User has to create a new character
         if USER_HAS_SAVED_DATA == false {
-            character = Character(scene: self, texture: "grandad")
-            character.xScale = 0.03
-            character.yScale = character.xScale
-            character.zPosition = 3
-            character.position = CGPoint(x: house.frame.midX - 5,
-                                         y: ground.frame.maxY - character.frame.size.height / 3)
-            self.addChild(character)
+            grandpaInTheHouse()
             
         }else{
             //User has saved date and should present HIS character here
-            character = Character(scene: self, texture: "grandad")
-            character.position = CGPoint(x: house.frame.maxY - character.frame.size.width * 2, y: ground.frame.maxY - character.frame.size.height / 3)
-            self.addChild(character)
+            
+            if hour >= grandpaSleepTime {
+                grandpaInTheHouse()
+            }else{
+                character = Character(scene: self, texture: "grandad")
+                character.position = CGPoint(x: house.frame.maxY - character.frame.size.width * 2, y: ground.frame.maxY - character.frame.size.height / 3)
+                self.addChild(character)
+            }
         }
+    }
+    
+    func grandpaInTheHouse(){
+        character = Character(scene: self, texture: "grandad")
+        character.xScale = 0.03
+        character.yScale = character.xScale
+        character.zPosition = 3
+        character.position = CGPoint(x: house.frame.midX - 5,
+                                     y: ground.frame.maxY - character.frame.size.height / 3)
+        self.addChild(character)
     }
     
     func makeDayOrNight(){
         createTitle()
         let date = Date()
         let calendar = Calendar.current
-        let hour = Int(calendar.component(.hour, from: date))
+        hour = Int(calendar.component(.hour, from: date))
         //It is day time
         if hour > timeSunRise && hour < timeSunSet {
             itIsDayTime = true
@@ -229,7 +240,25 @@ class MainMenu: SKScene, UITextFieldDelegate {
             //It is night time
         }else{
             itIsDayTime = false
+            if hour >= grandpaSleepTime {
+                sleepingTime()
+            }
             isNightTime()
+        }
+    }
+    
+    func sleepingTime(){
+        if USER_HAS_SAVED_DATA == true {
+            var counter = 1
+            sleepTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+                
+                if counter %  4 == 0 {
+                    
+                } else {
+                    self.animator.makeSleepForHouse(onNode: self.house, onScene: self)
+                }
+                counter += 1
+            }
         }
     }
     
@@ -256,7 +285,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
         
         startButton.color = nightColor
         startButton.colorBlendFactor = nightBlendValue
-        
         
         let moon = SpriteCreator(scene: self, texture: "moon", zPosition: 3, anchorPoints: nil)
         moon.xScale = 0.3
@@ -564,13 +592,29 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func continueButtonTouched(){
-        startTouched = true
-        continueButtonPressedAction()
-        soundMaker.playASound(scene: self, fileNamed: "buttonClick")
-        character.continueButtonPressed(onScene: self)
-        openAndCloseHouse(waitForDuration: 1.8)
-        touchManager.goWasTouched(scene: self)
-        prepareForNewScene(whichScene: "HouseScene")
+        let waitTime : Double = 1.8
+        let wait = SKAction.wait(forDuration: waitTime + 1)
+        
+        if hour >= grandpaSleepTime {
+            let waitFor = SKAction.wait(forDuration: 0.7)
+            startTouched = true
+            continueButtonPressedAction()
+            soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+            touchManager.goWasTouched(scene: self)
+            self.run(waitFor) {
+                self.prepareForNewScene(whichScene: "HouseScene")
+            }
+        }else{
+            startTouched = true
+            continueButtonPressedAction()
+            soundMaker.playASound(scene: self, fileNamed: "buttonClick")
+            character.continueButtonPressed(onScene: self)
+            openAndCloseHouse(waitForDuration: waitTime)
+            touchManager.goWasTouched(scene: self)
+            self.run(wait) {
+                self.prepareForNewScene(whichScene: "HouseScene")
+            }
+        }
     }
     
     
@@ -711,6 +755,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     func playerCancelledCreation(){
+        character.makeAngryGrandpa(scene: self)
         self.childNode(withName: "dob")?.removeFromParent()
         self.childNode(withName: "name")?.removeFromParent()
         self.childNode(withName: "cross")?.removeFromParent()
@@ -729,6 +774,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
             //CREATIONSTAGE 2 -  BIRTHDAY PICKER
         }else if creationStage == 2{
             if createGrandpaStage.dayCal.label.text == "DD" || createGrandpaStage.monthCal.label.text == "MM"{
+                character.makeAngryGrandpa(scene: self)
                 print("MUST HAVE A VALID VALUE BEFORE CONTINUE")
             }else{
                 saveCreationData(value1: createGrandpaStage.dayCal.label.text!, value2: createGrandpaStage.monthCal.label.text!)
@@ -738,6 +784,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
             //CREATIONSTAGE 3 - NAME PICKER
         }else if creationStage == 3 {
             if textInput.text == "" {
+                character.makeAngryGrandpa(scene: self)
             }else{
                 self.textInput.isHidden = true
                 creationStage = creationStage + 1
@@ -781,7 +828,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    
+        
         for touch in touches {
             let location = touch.location(in: self)
             let node = atPoint(location)
@@ -814,6 +861,9 @@ class MainMenu: SKScene, UITextFieldDelegate {
                 
             }else if node.name == "soundButton" {
                 soundSwitch(node: node, soundOrMusic: "sound")
+                
+            }else if node.name == character.name {
+                character.makeGranpaPain(scene: self)
                 
             }else if node.name == "debugMode" {
                 soundMaker.playASound(scene: self, fileNamed: "buttonClick")
@@ -874,7 +924,5 @@ class MainMenu: SKScene, UITextFieldDelegate {
             shouldResetNow = false
             prepareForNewScene(whichScene: "LoadingScene")
         }
-        
-        print(displayingMenuBoard)
     }
 }

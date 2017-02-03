@@ -19,19 +19,19 @@ enum UIUserInterfaceIdiom : Int {
 class GameViewController: UIViewController {
     private var loaded = false
     
-    override func viewWillLayoutSubviews() {
+    override func viewWillLayoutSubviews() { 
         
         if loaded == false {
         
             if let view = self.view as! SKView? {
             
-                let scene : LoadingScreen!
+                let scene : HouseScene!
                 switch UIDevice.current.userInterfaceIdiom {
                 case .phone:
                 
                 // Load the SKScene from 'GameScene.sks'
                 //NEED TO CHANGE THIS TO LOADING SCREEN WHEN READY
-                    scene = LoadingScreen(size: CGSize(width: 1024, height: 768))
+                    scene = HouseScene(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
                     scene.scaleMode = .aspectFit 
@@ -43,8 +43,7 @@ class GameViewController: UIViewController {
 
                     break
                 case .pad:
-                // Load the SKScene from 'GameScene.sks'
-                    scene = LoadingScreen(size: CGSize(width: 1024, height: 768))
+                    scene = HouseScene(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
                     scene.scaleMode = .fill
