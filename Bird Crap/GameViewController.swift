@@ -25,13 +25,13 @@ class GameViewController: UIViewController {
         
             if let view = self.view as! SKView? {
             
-                let scene : HouseScene!
+                let scene : LivingRoomScene!
                 switch UIDevice.current.userInterfaceIdiom {
                 case .phone:
                 
                 // Load the SKScene from 'GameScene.sks'
                 //NEED TO CHANGE THIS TO LOADING SCREEN WHEN READY
-                    scene = HouseScene(size: CGSize(width: 1024, height: 768))
+                    scene = LivingRoomScene(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
                     scene.scaleMode = .aspectFit 
@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
 
                     break
                 case .pad:
-                    scene = HouseScene(size: CGSize(width: 1024, height: 768))
+                    scene = LivingRoomScene(size: CGSize(width: 1024, height: 768))
                     // Set the scale mode to scale to fit the window
                     scene.size = view.bounds.size
                     scene.scaleMode = .fill

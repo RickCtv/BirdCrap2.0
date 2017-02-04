@@ -45,8 +45,6 @@ class MainMenu: SKScene, UITextFieldDelegate {
     private var dayCounter = 1
     private var monthCounter = 1
     private var firstCamPos : CGPoint!
-    //private var rightArrow : ArrowClass!
-    //private var leftArrow : ArrowClass!
     private var confirmButton : SpriteCreator!
     private var maxCount = 31
     private let calendarMonths = CalendarMonths()
@@ -207,7 +205,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         }else{
             //User has saved date and should present HIS character here
             
-            if hour >= grandpaSleepTime {
+            if hour >= grandpaSleepTime || hour >= 0 && hour <= timeSunRise {
                 grandpaInTheHouse()
             }else{
                 character = Character(scene: self, texture: "grandad")
@@ -232,6 +230,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         let date = Date()
         let calendar = Calendar.current
         hour = Int(calendar.component(.hour, from: date))
+        
         //It is day time
         if hour > timeSunRise && hour < timeSunSet {
             itIsDayTime = true
@@ -240,7 +239,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
             //It is night time
         }else{
             itIsDayTime = false
-            if hour >= grandpaSleepTime {
+            if hour >= grandpaSleepTime || hour >= 0 && hour <= timeSunRise {
                 sleepingTime()
             }
             isNightTime()
@@ -520,7 +519,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         if whichScene == "LoadingScene" {
             sceneToPresent = LoadingScreen(size: self.size)
         }else if whichScene == "HouseScene" {
-            sceneToPresent = HouseScene(size: self.size)
+            sceneToPresent = LivingRoomScene(size: self.size)
         }
         
         
@@ -595,7 +594,7 @@ class MainMenu: SKScene, UITextFieldDelegate {
         let waitTime : Double = 1.8
         let wait = SKAction.wait(forDuration: waitTime + 1)
         
-        if hour >= grandpaSleepTime {
+        if hour >= grandpaSleepTime || hour >= 0 && hour <= timeSunRise {
             let waitFor = SKAction.wait(forDuration: 0.7)
             startTouched = true
             continueButtonPressedAction()

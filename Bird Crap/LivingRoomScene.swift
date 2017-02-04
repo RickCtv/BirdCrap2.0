@@ -9,11 +9,17 @@
 import GameplayKit
 import AVFoundation
 
-class HouseScene: SKScene {
+class LivingRoomScene: SKScene {
+    
+    private var menuButtons : MenuSelectionButtons!
     
     override func didMove(to view: SKView) {
         makeLivingRoomLayout()
         makeArrows()
+        menuButtons = MenuSelectionButtons(scene: self, texture: "menuButtonMenuIcon", name: "MenuButton")
+        menuButtons.position = CGPoint(x: self.frame.maxX - menuButtons.frame.size.width / 2 - 10,
+                                       y: self.frame.maxY - menuButtons.frame.size.height / 2 - 10)
+        self.addChild(menuButtons)
     }
     
     func makeArrows(){
@@ -157,9 +163,9 @@ class HouseScene: SKScene {
     }
     
     func makeGestureControllers(){
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(HouseScene.handleSwipes))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(LivingRoomScene.handleSwipes))
         swipeRight.direction = .right
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(HouseScene.handleSwipes))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(LivingRoomScene.handleSwipes))
         swipeRight.direction = .left
         
         self.view?.addGestureRecognizer(swipeRight)
@@ -193,18 +199,23 @@ class HouseScene: SKScene {
                 print("TOUCHED LEFT")
             }else if node.name == "rightArrow"{
                 print("TOUCHED RIGHT")
+            }else if node.name == "MenuButton"{
+                print("TOUCHED MENU BUTTON")
+                menuButtons.menuButtonTouched(onScene: self)
+            }else if node.name == menuButtons.styleButtonName ||
+                node.name == menuButtons.miniGameButtonName ||
+                node.name == menuButtons.rankingsButtonName ||
+                node.name == menuButtons.settingsButtonName ||
+                node.name == menuButtons.shopButtonName ||
+                node.name == menuButtons.socialButtonName
+            {
+                print("TOUCHED \(node.name)")
+                let convert = node as! SKSpriteNode
+                menuButtons.buttonPressed(node: convert, onScene: self)
             }
+
         }
     }
-    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        
-//       for touch in touches {
-//            let location = touch.location(in: self)
-//            let node = atPoint(location)
-//        
-//        }
-//    }
     
     override func update(_ currentTime: TimeInterval) {
         

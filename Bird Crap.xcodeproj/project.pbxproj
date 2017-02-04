@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1661240A41073E732A4C804C /* Pods_Bird_Crap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */; };
+		73074AEA1E465734007355AC /* MenuSelectionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73074AE91E465734007355AC /* MenuSelectionButtons.swift */; };
+		73236DC91E454C040049F2D2 /* KitchenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DC81E454C040049F2D2 /* KitchenScene.swift */; };
+		73236DCB1E454C120049F2D2 /* GardenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DCA1E454C120049F2D2 /* GardenScene.swift */; };
+		73236DCD1E454C250049F2D2 /* BedroomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DCC1E454C250049F2D2 /* BedroomScene.swift */; };
+		73236DCF1E454C310049F2D2 /* BathroomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DCE1E454C310049F2D2 /* BathroomScene.swift */; };
 		7328B1901E4268A6007D82AE /* DebugingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7328B18F1E4268A6007D82AE /* DebugingMode.swift */; };
 		734726031E00732200B0E892 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726021E00732200B0E892 /* Cloud.swift */; };
 		7347260A1E0085B600B0E892 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734726091E0085B600B0E892 /* Character.swift */; };
@@ -77,7 +82,7 @@
 		73D36CDD1E351283003B2DB2 /* UsersDataKeyValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D36CDC1E351283003B2DB2 /* UsersDataKeyValues.swift */; };
 		73DEB3831E2593F3008E85DF /* CloseDoorSoundEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 73DEB3811E2593F3008E85DF /* CloseDoorSoundEffect.mp3 */; };
 		73DEB3841E2593F3008E85DF /* OpenDoorSoundEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 73DEB3821E2593F3008E85DF /* OpenDoorSoundEffect.mp3 */; };
-		73DEB3861E259A1F008E85DF /* HouseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DEB3851E259A1F008E85DF /* HouseScene.swift */; };
+		73DEB3861E259A1F008E85DF /* LivingRoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DEB3851E259A1F008E85DF /* LivingRoomScene.swift */; };
 		73F09EAC1E357560009E2B35 /* CreateGrandpa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F09EAB1E357560009E2B35 /* CreateGrandpa.swift */; };
 		73F5745C1E2D409F00385D25 /* UserDataFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F5745B1E2D409F00385D25 /* UserDataFirebase.swift */; };
 		73FDE9691E2D3B980097A16F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */; };
@@ -102,6 +107,11 @@
 
 /* Begin PBXFileReference section */
 		194FAC302ADA416F816299FB /* Pods_Bird_CrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_CrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73074AE91E465734007355AC /* MenuSelectionButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSelectionButtons.swift; sourceTree = "<group>"; };
+		73236DC81E454C040049F2D2 /* KitchenScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitchenScene.swift; sourceTree = "<group>"; };
+		73236DCA1E454C120049F2D2 /* GardenScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GardenScene.swift; sourceTree = "<group>"; };
+		73236DCC1E454C250049F2D2 /* BedroomScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BedroomScene.swift; sourceTree = "<group>"; };
+		73236DCE1E454C310049F2D2 /* BathroomScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BathroomScene.swift; sourceTree = "<group>"; };
 		7328B18F1E4268A6007D82AE /* DebugingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugingMode.swift; sourceTree = "<group>"; };
 		734726021E00732200B0E892 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		734726091E0085B600B0E892 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
@@ -177,7 +187,7 @@
 		73D36CDC1E351283003B2DB2 /* UsersDataKeyValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersDataKeyValues.swift; sourceTree = "<group>"; };
 		73DEB3811E2593F3008E85DF /* CloseDoorSoundEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CloseDoorSoundEffect.mp3; sourceTree = "<group>"; };
 		73DEB3821E2593F3008E85DF /* OpenDoorSoundEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = OpenDoorSoundEffect.mp3; sourceTree = "<group>"; };
-		73DEB3851E259A1F008E85DF /* HouseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseScene.swift; sourceTree = "<group>"; };
+		73DEB3851E259A1F008E85DF /* LivingRoomScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivingRoomScene.swift; sourceTree = "<group>"; };
 		73F09EAB1E357560009E2B35 /* CreateGrandpa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGrandpa.swift; sourceTree = "<group>"; };
 		73F5745B1E2D409F00385D25 /* UserDataFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataFirebase.swift; sourceTree = "<group>"; };
 		73FDE9681E2D3B980097A16F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -285,6 +295,7 @@
 				734726171E00CDBB00B0E892 /* SpriteCreator.swift */,
 				7347260D1E00970C00B0E892 /* Sun.swift */,
 				734726021E00732200B0E892 /* Cloud.swift */,
+				73074AE91E465734007355AC /* MenuSelectionButtons.swift */,
 			);
 			name = "Creation Classes";
 			sourceTree = "<group>";
@@ -337,7 +348,11 @@
 			children = (
 				73A5955D1E2AA46B007106F0 /* LoadingScreen.swift */,
 				739B7FF01DFD90D500A022E7 /* MainMenu.swift */,
-				73DEB3851E259A1F008E85DF /* HouseScene.swift */,
+				73DEB3851E259A1F008E85DF /* LivingRoomScene.swift */,
+				73236DC81E454C040049F2D2 /* KitchenScene.swift */,
+				73236DCA1E454C120049F2D2 /* GardenScene.swift */,
+				73236DCC1E454C250049F2D2 /* BedroomScene.swift */,
+				73236DCE1E454C310049F2D2 /* BathroomScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -757,15 +772,19 @@
 				73D36CD51E32C320003B2DB2 /* Camera.swift in Sources */,
 				7347260A1E0085B600B0E892 /* Character.swift in Sources */,
 				73A5955E1E2AA46B007106F0 /* LoadingScreen.swift in Sources */,
+				73236DC91E454C040049F2D2 /* KitchenScene.swift in Sources */,
 				73D36CDB1E33B908003B2DB2 /* CalendarCreator.swift in Sources */,
+				73236DCF1E454C310049F2D2 /* BathroomScene.swift in Sources */,
+				73236DCD1E454C250049F2D2 /* BedroomScene.swift in Sources */,
 				737EDE8A1E43D95E00A9F980 /* SKActionSoundExtension.swift in Sources */,
-				73DEB3861E259A1F008E85DF /* HouseScene.swift in Sources */,
+				73DEB3861E259A1F008E85DF /* LivingRoomScene.swift in Sources */,
 				734726031E00732200B0E892 /* Cloud.swift in Sources */,
 				739B7FF31DFD90D500A022E7 /* GameViewController.swift in Sources */,
 				734726121E00A8E200B0E892 /* MenuButton.swift in Sources */,
 				736AF54B1E369B7D002C9AC0 /* CalendarMonths.swift in Sources */,
 				73C5DAC91E0861DC00979815 /* TouchManager.swift in Sources */,
 				73F09EAC1E357560009E2B35 /* CreateGrandpa.swift in Sources */,
+				73236DCB1E454C120049F2D2 /* GardenScene.swift in Sources */,
 				7361E2B51E01C6E100705A80 /* MenuBillboard.swift in Sources */,
 				734D9E3E1E2EE66300046D87 /* CheckWifiStatus.swift in Sources */,
 				7328B1901E4268A6007D82AE /* DebugingMode.swift in Sources */,
@@ -775,6 +794,7 @@
 				734726181E00CDBB00B0E892 /* SpriteCreator.swift in Sources */,
 				73D36CDD1E351283003B2DB2 /* UsersDataKeyValues.swift in Sources */,
 				7347261A1E00D2A400B0E892 /* AnimationEditor.swift in Sources */,
+				73074AEA1E465734007355AC /* MenuSelectionButtons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
