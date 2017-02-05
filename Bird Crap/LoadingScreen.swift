@@ -53,6 +53,7 @@ class LoadingScreen: SKScene {
     func makeLoadingScreen(){
         let fence = SpriteCreator(scene: self, texture: "FenceLoading", zPosition: 8, anchorPoints: CGPoint(x: 0.5, y: 0))
         fence.size = CGSize(width: self.frame.size.width, height: 200)
+        fence.position.x = self.frame.midX
         fence.position.y = self.frame.minY - fence.frame.size.height / 3
         self.addChild(fence)
         
@@ -69,6 +70,7 @@ class LoadingScreen: SKScene {
         logo.zPosition = 6
         logo.fontName = gameFont
         logo.position.y = self.frame.maxY - logo.frame.size.height + 20
+        logo.position.x = self.frame.midX
         self.addChild(logo)
         
         loadingText = SKLabelNode(fontNamed: gameFont)
@@ -82,6 +84,7 @@ class LoadingScreen: SKScene {
         loadingText.fontSize = 40
         loadingText.zPosition = 10
         loadingText.position.y = self.frame.minY + loadingText.frame.size.height + 20
+        loadingText.position.x = self.frame.midX
         
         var count = 0
         let textArray = ["loading.", "loading..", "loading..."]

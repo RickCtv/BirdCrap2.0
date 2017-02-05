@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1661240A41073E732A4C804C /* Pods_Bird_Crap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82AB2A3B665286ADD88A3BE9 /* Pods_Bird_Crap.framework */; };
 		73074AEA1E465734007355AC /* MenuSelectionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73074AE91E465734007355AC /* MenuSelectionButtons.swift */; };
+		73074AEC1E477B21007355AC /* LivingRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73074AEB1E477B21007355AC /* LivingRoom.swift */; };
 		73236DC91E454C040049F2D2 /* KitchenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DC81E454C040049F2D2 /* KitchenScene.swift */; };
 		73236DCB1E454C120049F2D2 /* GardenScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DCA1E454C120049F2D2 /* GardenScene.swift */; };
 		73236DCD1E454C250049F2D2 /* BedroomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73236DCC1E454C250049F2D2 /* BedroomScene.swift */; };
@@ -108,6 +109,7 @@
 /* Begin PBXFileReference section */
 		194FAC302ADA416F816299FB /* Pods_Bird_CrapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bird_CrapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73074AE91E465734007355AC /* MenuSelectionButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSelectionButtons.swift; sourceTree = "<group>"; };
+		73074AEB1E477B21007355AC /* LivingRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LivingRoom.swift; sourceTree = "<group>"; };
 		73236DC81E454C040049F2D2 /* KitchenScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitchenScene.swift; sourceTree = "<group>"; };
 		73236DCA1E454C120049F2D2 /* GardenScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GardenScene.swift; sourceTree = "<group>"; };
 		73236DCC1E454C250049F2D2 /* BedroomScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BedroomScene.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 		73236DC31E45483D0049F2D2 /* Creation Classes */ = {
 			isa = PBXGroup;
 			children = (
+				73074AEB1E477B21007355AC /* LivingRoom.swift */,
 				73D36CDA1E33B908003B2DB2 /* CalendarCreator.swift */,
 				73D36CD41E32C320003B2DB2 /* Camera.swift */,
 				73D36CD81E33884D003B2DB2 /* ArrowClass.swift */,
@@ -764,6 +767,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				739B7FF11DFD90D500A022E7 /* MainMenu.swift in Sources */,
+				73074AEC1E477B21007355AC /* LivingRoom.swift in Sources */,
 				73D36CD91E33884D003B2DB2 /* ArrowClass.swift in Sources */,
 				7347260C1E00892900B0E892 /* SoundManager.swift in Sources */,
 				7347260E1E00970C00B0E892 /* Sun.swift in Sources */,
